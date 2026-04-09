@@ -1,3 +1,7 @@
+# =============================================================================
+# ARQUIVO CONCEITUAL — Código ilustrativo para fins de ideação de produto.
+# Esta implementação representa uma proposta arquitetural, não código de produção.
+# =============================================================================
 """
 Lumina Care — Triage Data Models
 Pydantic models for triage request/response schemas.

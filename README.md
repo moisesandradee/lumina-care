@@ -13,9 +13,13 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Status](https://img.shields.io/badge/Status-MVP%20in%20progress-orange)]()
+[![Status](https://img.shields.io/badge/Status-Ideação-blueviolet)]()
 
 </div>
+
+---
+
+> **Sobre este repositório** — Lumina é um exercício de ideação de produto. O código é ilustrativo e os documentos representam uma proposta conceitual arquiteturalmente fundamentada. Este repositório não é um sistema em produção — é um artefato de design thinking: rigoroso na análise do problema, preciso na proposta de solução, honesto sobre o que ainda não existe.
 
 ---
 
@@ -39,9 +43,9 @@ There is a gap between the data that exists and the insight that reaches the cli
 
 ## The Solution
 
-Lumina is a clinical intelligence platform that applies AI to the ambient signals of mental health care — structured assessments, session notes, care interactions, and longitudinal data — to provide mental health professionals with **actionable, evidence-informed insights** precisely when they need them.
+Lumina is a **proposed** clinical intelligence platform that would apply AI to the ambient signals of mental health care — structured assessments, session notes, care interactions, and longitudinal data — to provide mental health professionals with **actionable, evidence-informed insights** precisely when they need them.
 
-It does not replace clinical judgment. It amplifies it.
+It would not replace clinical judgment. It would amplify it.
 
 ```
 Patient signal → Lumina intelligence layer → Clinician insight → Better care decision
@@ -87,7 +91,7 @@ graph TD
     style G fill:#0ea5e9,color:#fff
 ```
 
-The platform follows a **layered intelligence architecture**:
+The proposed platform follows a **layered intelligence architecture**:
 
 1. **Ingestion Layer** — standardizes inputs from assessments, EHR extracts, and direct interactions
 2. **AI Engine** — processes signals through specialized LLM prompts calibrated for clinical safety
@@ -144,7 +148,7 @@ A clinical director reviews aggregate, de-identified team data to understand cas
 
 ## Ethical Commitments
 
-Lumina is built with the understanding that AI in mental health carries extraordinary responsibility. Our commitments:
+This conceptual platform is designed with the understanding that AI in mental health carries extraordinary responsibility. Core design commitments:
 
 - **Lumina does not diagnose.** It surfaces risk signals to inform clinical attention.
 - **Lumina does not replace crisis intervention.** Suicidal ideation signals trigger mandatory human escalation, not AI responses.
@@ -201,60 +205,39 @@ lumina-care/
 
 ---
 
-## Getting Started
+## Proposta de Implementação
 
-### Prerequisites
+> O código neste repositório é **ilustrativo** — representa como a arquitetura proposta seria estruturada, não um sistema funcional pronto para execução. Os comandos abaixo descrevem a implementação de referência.
+
+### Stack de referência
 - Docker & Docker Compose
-- Node.js 18+
-- Python 3.11+
+- Node.js 18+ / Python 3.11+
+- PostgreSQL 15 + Redis 7
 - Anthropic API key
 
-### Run with Docker (recommended)
+### Fluxo de setup proposto
 
 ```bash
 git clone https://github.com/moisesandradee/lumina-care.git
 cd lumina-care
 
 cp .env.example .env
-# Edit .env and add your ANTHROPIC_API_KEY
+# Configurar variáveis de ambiente conforme documentado em .env.example
 
 docker-compose up --build
+# API: http://localhost:8000 | Web: http://localhost:3000
 ```
 
-The API will be available at `http://localhost:8000`  
-The web interface at `http://localhost:3000`  
-API docs (Swagger) at `http://localhost:8000/docs`
+### API proposta
 
-### Run locally
-
-**Backend:**
-```bash
-cd src/api
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
-```
-
-**Frontend:**
-```bash
-cd src/web
-npm install
-npm run dev
-```
-
----
-
-## API Overview
-
-| Method | Endpoint | Description |
+| Método | Endpoint | Função |
 |---|---|---|
-| `POST` | `/api/v1/triage/analyze` | Submit patient data for risk triage |
-| `GET` | `/api/v1/triage/queue` | Retrieve prioritized patient queue |
-| `GET` | `/api/v1/patients/{id}/insights` | Get AI insights for a patient |
-| `POST` | `/api/v1/patients/{id}/assessment` | Submit new clinical assessment |
-| `GET` | `/api/v1/insights/team-summary` | Aggregate team intelligence dashboard |
-| `POST` | `/api/v1/triage/{id}/override` | Clinical override / annotation |
-
-Full API documentation auto-generated at `/docs` (Swagger UI) and `/redoc`.
+| `POST` | `/api/v1/triage/analyze` | Análise de risco a partir de dados do paciente |
+| `GET` | `/api/v1/triage/queue` | Fila priorizada de atenção clínica |
+| `GET` | `/api/v1/patients/{id}/insights` | Insights de IA para paciente específico |
+| `POST` | `/api/v1/patients/{id}/assessment` | Registro de nova avaliação clínica |
+| `GET` | `/api/v1/insights/team-summary` | Painel agregado de inteligência de equipe |
+| `POST` | `/api/v1/triage/{id}/override` | Override clínico / anotação profissional |
 
 ---
 
@@ -264,7 +247,7 @@ See [`docs/ROADMAP.md`](docs/ROADMAP.md) for the full roadmap with milestones.
 
 | Phase | Focus | Status |
 |---|---|---|
-| **Phase 1 — Foundation** | Core triage engine, API, data models | 🔄 In Progress |
+| **Phase 1 — Foundation** | Core triage engine, API, data models | 📐 Conceito |
 | **Phase 2 — Intelligence** | Risk scoring, trajectory analysis, LLM integration | 📋 Planned |
 | **Phase 3 — Interface** | Clinical dashboard, care coordinator view | 📋 Planned |
 | **Phase 4 — Integration** | EHR connectors, HL7 FHIR support | 📋 Planned |
@@ -282,14 +265,14 @@ Lumina is a bet on that possibility.
 
 ---
 
-## Contributing
+## Colaboração
 
-Lumina is currently in MVP development. Contributions are welcome, especially from:
-- Mental health clinicians willing to review clinical logic
-- Engineers experienced in healthcare data and AI safety
-- Researchers in computational psychiatry and clinical NLP
+Contribuições ao projeto de ideação são bem-vindas, especialmente de:
+- Profissionais de saúde mental dispostos a revisar a lógica clínica e os casos de uso
+- Engenheiros com experiência em dados de saúde e segurança em IA
+- Pesquisadores em psiquiatria computacional e NLP clínico
 
-Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) before submitting pull requests.
+Issues e discussões são o canal preferido para contribuições conceituais.
 
 ---
 

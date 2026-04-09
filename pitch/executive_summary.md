@@ -1,6 +1,8 @@
-# Executive Summary — Lumina
+# Sumário Executivo — Lumina
 
-## The Opportunity
+> **Documento de ideação.** Este sumário descreve uma proposta de produto. O Lumina está em fase conceitual — este documento apresenta a tese, não métricas de tração ou receita.
+
+## A Oportunidade
 
 Mental health is the largest unaddressed healthcare challenge of our generation. Over 970 million people globally live with a mental health or substance use condition. The treatment gap — the proportion who need care but don't receive it — exceeds 70% in most countries. In Brazil, estimates suggest that fewer than 20% of people with mental health conditions receive adequate treatment.
 
