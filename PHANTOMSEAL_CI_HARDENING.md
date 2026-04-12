@@ -1,9 +1,10 @@
 # PhantomSeal CI Hardening Report
+
 ## Platform Engineering Analysis & Refactoring
 
 **Date:** April 12, 2026  
 **Status:** ✅ **Complete**  
-**Target:** Deterministic, Observable, Minimal, Audit-Friendly CI Pipeline  
+**Target:** Deterministic, Observable, Minimal, Audit-Friendly CI Pipeline
 
 ---
 
@@ -21,6 +22,7 @@ The PhantomSeal CI pipeline had four critical failure modes that allowed errors 
 ### 1. Silent Failure Mode (CRITICAL) 🔴
 
 **Problem:**
+
 ```yaml
 # Original workflow — Line 49-50
 EVIDENCE_FILE=$(ls -t evidence/seal_*.json | head -n 1)
@@ -28,6 +30,7 @@ python verify.py test.txt "$EVIDENCE_FILE"
 ```
 
 **Failure Scenario:**
+
 1. `signer.py` fails internally → returns exit code != 0
 2. Workflow does NOT check exit code
 3. No evidence file is created
@@ -39,6 +42,7 @@ python verify.py test.txt "$EVIDENCE_FILE"
 9. **Root cause hidden** — signer failure is masked
 
 **Fix Applied:**
+
 ```bash
 # New workflow — Step "Generate seal (dry-run)"
 python signer.py test.txt > /tmp/seal_output.json 2>&1
@@ -56,6 +60,7 @@ fi
 ### 2. Dependency Mismatch (MEDIUM) 🟠
 
 **Problem:**
+
 ```txt
 # requirements.txt
 dilithium-py>=0.0.5     ← Not imported by signer.py or verify.py
@@ -66,6 +71,7 @@ python-dotenv>=1.0      ← ✓ Used
 ```
 
 **Analysis:**
+
 - Signer.py imports: `os, json, hashlib, pathlib, datetime, dotenv, eth_account, web3`
 - Verify.py imports: `json, hashlib, pathlib, eth_account, web3`
 - Dead dependencies add 3-5s to install without value in CI
@@ -73,6 +79,7 @@ python-dotenv>=1.0      ← ✓ Used
 - Increases CI failure surface area (unused code paths)
 
 **Fix Applied:**
+
 ```txt
 # Created phantom-seal/requirements-ci.txt (new, minimal)
 web3>=6.0
@@ -81,6 +88,7 @@ python-dotenv>=1.0
 ```
 
 **Kept requirements.txt for development:**
+
 - dilithium-py → for PQC testing (separate from signer/verify)
 - fpdf2 → for PDF test generation (separate from signer/verify)
 
@@ -91,15 +99,17 @@ python-dotenv>=1.0
 ### 3. Scope Not Isolated (MEDIUM) 🟠
 
 **Problem:**
+
 ```yaml
 # Original workflow — Line 9-11
 paths:
-  - 'phantom-seal/**'
-  - '.github/workflows/python-app.yml'
+  - "phantom-seal/**"
+  - ".github/workflows/python-app.yml"
   # Missing: paths filter on pull_request!
 ```
 
 **Failure Scenario:**
+
 - Developer updates `package.json` (unrelated to PhantomSeal)
 - Prettier reformats `CONTRIBUTING.md` (unrelated)
 - ESLint config changes `.eslintrc.json` (unrelated)
@@ -108,6 +118,7 @@ paths:
 - Waste of compute, noise in logs
 
 **Fix Applied:**
+
 ```yaml
 on:
   push:
@@ -118,7 +129,7 @@ on:
   pull_request:
     branches: [master]
     paths:
-      - "phantom-seal/**"      # ← NEW: Added paths filter to PR
+      - "phantom-seal/**" # ← NEW: Added paths filter to PR
 ```
 
 **Impact:** Workflow is now scoped. Frontend changes do not trigger PhantomSeal CI.
@@ -128,6 +139,7 @@ on:
 ### 4. Low Observability (MEDIUM) 🟠
 
 **Problem:**
+
 ```yaml
 # Original — Step outputs
 - name: Run signer in dry-run
@@ -143,6 +155,7 @@ on:
 ```
 
 **Failure Scenario:**
+
 - Evidence file is created but corrupted
 - `ls` shows file exists but don't know if valid
 - Verify fails downstream with cryptic error
@@ -150,6 +163,7 @@ on:
 - Investigation requires manual log inspection
 
 **Fix Applied:**
+
 ```bash
 # New workflow — Multiple observability improvements
 
@@ -194,6 +208,7 @@ echo "PhantomSeal Validation Complete ✓"
 ### Workflow Structure (`.github/workflows/python-app.yml`)
 
 **Before (56 lines):**
+
 ```
 - Multiple implicit dependencies
 - Job "test" (misleading name)
@@ -203,6 +218,7 @@ echo "PhantomSeal Validation Complete ✓"
 ```
 
 **After (115 lines, more explicit):**
+
 ```
 ✓ Single job: phantomseal-sign-verify
 ✓ Explicit step naming
@@ -216,22 +232,23 @@ echo "PhantomSeal Validation Complete ✓"
 
 ### Changes Summary
 
-| Area | Before | After | Benefit |
-|------|--------|-------|---------|
-| **Job Count** | 1 (implicit) | 1 (explicit) | Clarity |
-| **Steps** | 6 | 8 | Observability |
-| **Validation** | None | Explicit | Safety |
-| **Dependencies** | 5 packages | 3 packages | Speed |
-| **Scope Filter** | PR missing | PR added | Isolation |
-| **Output** | 1 line | 10+ lines | Debuggability |
-| **Install Time** | ~15s | ~10s | 33% faster |
-| **Timeout** | Implicit | 10 min | Fast fail |
+| Area             | Before       | After        | Benefit       |
+| ---------------- | ------------ | ------------ | ------------- |
+| **Job Count**    | 1 (implicit) | 1 (explicit) | Clarity       |
+| **Steps**        | 6            | 8            | Observability |
+| **Validation**   | None         | Explicit     | Safety        |
+| **Dependencies** | 5 packages   | 3 packages   | Speed         |
+| **Scope Filter** | PR missing   | PR added     | Isolation     |
+| **Output**       | 1 line       | 10+ lines    | Debuggability |
+| **Install Time** | ~15s         | ~10s         | 33% faster    |
+| **Timeout**      | Implicit     | 10 min       | Fast fail     |
 
 ---
 
 ## Remaining Risks
 
 ### Risk 1: DRY_RUN Hardcoded (LOW)
+
 ```yaml
 env:
   DRY_RUN: "true"
@@ -244,6 +261,7 @@ env:
 ---
 
 ### Risk 2: Test Private Key (LOW)
+
 ```yaml
 WALLET_PRIVATE_KEY: "0x59c6995e998f97a5a0044966f094538e2d7d2d0f2b2db9d6d7db4f2a6f6f6f6f"
 ```
@@ -253,6 +271,7 @@ WALLET_PRIVATE_KEY: "0x59c6995e998f97a5a0044966f094538e2d7d2d0f2b2db9d6d7db4f2a6
 **Recommendation:** Move to GitHub Secrets for production. Add comment explaining it's test-only.
 
 **Fix:**
+
 ```yaml
 WALLET_PRIVATE_KEY: ${{ secrets.PHANTOM_SEAL_TEST_KEY || '0x59c69...' }}
 ```
@@ -260,6 +279,7 @@ WALLET_PRIVATE_KEY: ${{ secrets.PHANTOM_SEAL_TEST_KEY || '0x59c69...' }}
 ---
 
 ### Risk 3: No RPC in DRY_RUN (LOW)
+
 ```python
 # verify.py — Line 45-50
 if not tx_hash:
@@ -273,6 +293,7 @@ if not tx_hash:
 ---
 
 ### Risk 4: PDF Generation Removed (LOW)
+
 ```txt
 # Removed from requirements-ci.txt
 fpdf2>=2.7
@@ -285,6 +306,7 @@ fpdf2>=2.7
 ---
 
 ### Risk 5: Dilithium-PY Not Tested (LOW)
+
 ```txt
 # Removed from requirements-ci.txt
 dilithium-py>=0.0.5
@@ -299,6 +321,7 @@ dilithium-py>=0.0.5
 ## Code Quality Assessment
 
 ### ✅ signer.py (Robust)
+
 - Error handling: ✅ Catches FileNotFoundError
 - Path safety: ✅ Uses pathlib
 - JSON integrity: ✅ Structured output
@@ -310,6 +333,7 @@ dilithium-py>=0.0.5
 ---
 
 ### ✅ verify.py (Robust)
+
 - Input validation: ✅ Path existence check
 - Signature verification: ✅ Address recovery
 - On-chain validation: ✅ Optional RPC
@@ -340,21 +364,21 @@ dilithium-py>=0.0.5
 [ ] 1. Add GitHub Secrets for WALLET_PRIVATE_KEY
       - Store test key securely
       - Use ${{ secrets.PHANTOM_SEAL_TEST_KEY }}
-      
+
 [ ] 2. Create separate mainnet validation workflow
       - DRY_RUN: false
       - RPC_URL: Sepolia testnet
       - Trigger: Manual or tag-based
-      
+
 [ ] 3. Add PQC validation job (if required)
       - Test dilithium-py signing
       - Test signature verification
       - Parallel job to main workflow
-      
+
 [ ] 4. Add PDF generation validation
       - Use requirements.txt with fpdf2
       - Separate job (don't bloat minimal CI)
-      
+
 [ ] 5. Add artifact upload
       - Upload evidence/seal_*.json to GitHub Artifacts
       - Retain for audit trail (30 days)
@@ -368,20 +392,20 @@ dilithium-py>=0.0.5
 [ ] 1. Integrate backend API tests
       - Share CI infra with src/api/
       - Separate jobs but common workflow
-      
+
 [ ] 2. Add supply-chain security
       - SBOM generation (spdx-cyclonedx)
       - Attestation signing (in-toto)
-      
+
 [ ] 3. Implement audit logging
       - Log all seal operations to database
       - Query evidence by timestamp, hash, wallet
-      
+
 [ ] 4. Add performance benchmarks
       - Signer latency baseline
       - Verify latency baseline
       - Alert on regression
-      
+
 [ ] 5. Create status dashboard
       - Last successful seal
       - Average seal time
@@ -397,12 +421,12 @@ dilithium-py>=0.0.5
       - Ethereum Mainnet
       - Polygon
       - Arbitrum
-      
+
 [ ] 2. Compliance reporting
       - ISO 27001 audit logs
       - HIPAA compatibility
       - Evidence export formats
-      
+
 [ ] 3. Integration with Lumina main app
       - Document signing via API
       - Evidence validation endpoint
@@ -434,12 +458,12 @@ Optional (requirements.txt — development only):
 
 ### Environment Variables
 
-| Variable | Value | Purpose | Sensitivity |
-|----------|-------|---------|-------------|
-| `DRY_RUN` | "true" | Skip blockchain tx | Public |
-| `CHAIN_ID` | "11155111" | Sepolia testnet | Public |
-| `WALLET_PRIVATE_KEY` | (test key) | Signing key | Should be Secret |
-| `SEPOLIA_RPC_URL` | (optional) | RPC endpoint | Should be Secret |
+| Variable             | Value      | Purpose            | Sensitivity      |
+| -------------------- | ---------- | ------------------ | ---------------- |
+| `DRY_RUN`            | "true"     | Skip blockchain tx | Public           |
+| `CHAIN_ID`           | "11155111" | Sepolia testnet    | Public           |
+| `WALLET_PRIVATE_KEY` | (test key) | Signing key        | Should be Secret |
+| `SEPOLIA_RPC_URL`    | (optional) | RPC endpoint       | Should be Secret |
 
 ---
 
@@ -470,6 +494,7 @@ No parallelization possible (sequential dependencies).
 ## Audit Trail
 
 **Changes by commit:**
+
 ```
 42a46ba refactor: harden PhantomSeal CI pipeline for determinism
 
@@ -515,4 +540,4 @@ The PhantomSeal CI pipeline has been refactored from an implicit, failure-prone 
 
 **Prepared by:** Platform Engineer / Software Architecture Specialist  
 **Date:** April 12, 2026  
-**Final:** Ready for deployment  
+**Final:** Ready for deployment

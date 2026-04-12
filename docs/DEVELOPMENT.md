@@ -20,6 +20,7 @@ chore/<task>              # Maintenance tasks
 ```
 
 **Examples:**
+
 ```
 feature/triage-risk-algorithm
 fix/phq9-score-validation
@@ -35,6 +36,7 @@ docs/api-endpoints
 Follow [Conventional Commits](https://www.conventionalcommits.org/).
 
 ### Format
+
 ```
 <type>(<scope>): <subject>
 
@@ -44,6 +46,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/).
 ```
 
 ### Types
+
 - **feat** — New feature
 - **fix** — Bug fix
 - **docs** — Documentation
@@ -158,6 +161,7 @@ git push
 ### 7. Merge to Master
 
 Once approved:
+
 ```bash
 # Merge via GitHub UI
 # or locally:
@@ -269,6 +273,7 @@ poetry run ruff check  # Python lint
 ### CI/CD Checks
 
 Pull requests must pass:
+
 - ✅ `frontend-tests` — Next.js tests & coverage
 - ✅ `backend-tests` — FastAPI tests & coverage
 - ✅ `validate` — Type checking + linting
@@ -281,6 +286,7 @@ Pull requests must pass:
 ### "Pre-commit hook failed"
 
 **Solution:** Fix the errors shown:
+
 ```bash
 # Run linters manually to see issues
 npm run lint
@@ -295,6 +301,7 @@ poetry run ruff check --fix src/
 ### "Type checking failed"
 
 **Solution:** Add type hints:
+
 ```typescript
 // ❌ Wrong
 const calculate = (values) => {
@@ -310,6 +317,7 @@ const calculate = (values: number[]): number => {
 ### "Tests failing locally but passing in CI"
 
 **Solution:** Ensure you have test API key:
+
 ```bash
 export ANTHROPIC_API_KEY="sk-test-key"
 make test
@@ -318,6 +326,7 @@ make test
 ### "Package version conflicts"
 
 **Solution:** Refresh lock files:
+
 ```bash
 npm ci              # Use package-lock.json exactly
 poetry install      # Use poetry.lock exactly
@@ -405,4 +414,3 @@ Before requesting review, verify:
 ---
 
 **Next:** [TESTING.md](./TESTING.md) — Testing best practices
-

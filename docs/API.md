@@ -30,6 +30,7 @@ curl http://localhost:8000/health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "ok",
@@ -39,6 +40,7 @@ curl http://localhost:8000/health
 ```
 
 **Status Codes:**
+
 - `200` — Service is healthy
 
 ---
@@ -52,6 +54,7 @@ curl http://localhost:8000/ready
 ```
 
 **Response:**
+
 ```json
 {
   "status": "ready",
@@ -64,6 +67,7 @@ curl http://localhost:8000/ready
 ```
 
 **Status Codes:**
+
 - `200` — All services ready
 - `503` — Service unavailable
 
@@ -88,6 +92,7 @@ curl -X POST http://localhost:8000/api/v1/triage \
 ```
 
 **Request Body:**
+
 ```json
 {
   "patient_id": "string",              // Unique patient identifier (required)
@@ -99,6 +104,7 @@ curl -X POST http://localhost:8000/api/v1/triage \
 ```
 
 **Response (201):**
+
 ```json
 {
   "patient_id": "patient-123",
@@ -114,12 +120,14 @@ curl -X POST http://localhost:8000/api/v1/triage \
 ```
 
 **Status Codes:**
+
 - `200/201` — Triage completed
 - `400` — Invalid request
 - `422` — Validation error
 - `500` — Server error
 
 **PHQ-9 Interpretation:**
+
 - 0-4: Minimal
 - 5-9: Mild
 - 10-14: Moderate
@@ -127,6 +135,7 @@ curl -X POST http://localhost:8000/api/v1/triage \
 - 20-27: Severe
 
 **GAD-7 Interpretation:**
+
 - 0-4: Minimal
 - 5-9: Mild
 - 10-14: Moderate
@@ -154,6 +163,7 @@ curl -X POST http://localhost:8000/api/v1/insights \
 ```
 
 **Request Body:**
+
 ```json
 {
   "patient_id": "string",           // Patient identifier (required)
@@ -166,6 +176,7 @@ curl -X POST http://localhost:8000/api/v1/insights \
 ```
 
 **Response (200):**
+
 ```json
 {
   "patient_id": "patient-123",
@@ -186,6 +197,7 @@ curl -X POST http://localhost:8000/api/v1/insights \
 ```
 
 **Status Codes:**
+
 - `200` — Insights generated
 - `400` — Invalid request
 - `500` — AI service error
@@ -203,6 +215,7 @@ curl http://localhost:8000/api/v1/patients
 ```
 
 **Response (200):**
+
 ```json
 [
   {
@@ -233,6 +246,7 @@ curl -X POST http://localhost:8000/api/v1/patients \
 ```
 
 **Request Body:**
+
 ```json
 {
   "name": "string",              // Patient name (required)
@@ -243,6 +257,7 @@ curl -X POST http://localhost:8000/api/v1/patients \
 ```
 
 **Response (201):**
+
 ```json
 {
   "id": "patient-123",
@@ -264,6 +279,7 @@ curl http://localhost:8000/api/v1/patients/patient-123
 ```
 
 **Response (200):**
+
 ```json
 {
   "id": "patient-123",
@@ -277,6 +293,7 @@ curl http://localhost:8000/api/v1/patients/patient-123
 ```
 
 **Status Codes:**
+
 - `200` — Patient found
 - `404` — Patient not found
 
@@ -296,6 +313,7 @@ curl -X PUT http://localhost:8000/api/v1/patients/patient-123 \
 ```
 
 **Response (200):**
+
 ```json
 {
   "id": "patient-123",
@@ -316,6 +334,7 @@ curl -X DELETE http://localhost:8000/api/v1/patients/patient-123
 ```
 
 **Status Codes:**
+
 - `204` — Patient deleted
 - `404` — Patient not found
 
@@ -334,16 +353,16 @@ curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
 
 ## 📊 Response Codes
 
-| Code | Meaning |
-|------|---------|
-| `200` | OK — Request successful |
-| `201` | Created — Resource created |
-| `400` | Bad Request — Invalid input |
-| `401` | Unauthorized — Auth required |
-| `404` | Not Found — Resource doesn't exist |
+| Code  | Meaning                                |
+| ----- | -------------------------------------- |
+| `200` | OK — Request successful                |
+| `201` | Created — Resource created             |
+| `400` | Bad Request — Invalid input            |
+| `401` | Unauthorized — Auth required           |
+| `404` | Not Found — Resource doesn't exist     |
 | `422` | Validation Error — Invalid data format |
-| `500` | Server Error — Unexpected error |
-| `503` | Service Unavailable — Dependency down |
+| `500` | Server Error — Unexpected error        |
+| `503` | Service Unavailable — Dependency down  |
 
 ---
 
@@ -382,4 +401,3 @@ curl -X POST http://localhost:8000/api/v1/triage \
 ---
 
 **Next:** [DATABASE.md](./DATABASE.md) — Database schema and migrations
-

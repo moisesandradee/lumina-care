@@ -9,6 +9,7 @@ Production deployment for Lumina Care.
 ## 🚀 Deployment Overview
 
 ### Current Stage
+
 - ✅ Development environment fully functional
 - ✅ CI/CD pipeline implemented
 - ⏳ Production deployment in Phase 3
@@ -16,11 +17,13 @@ Production deployment for Lumina Care.
 ### Deployment Strategy
 
 **Manual Deployment (Current)**
+
 1. Merge PR to `master` (triggers CI/CD)
 2. Wait for all checks to pass
 3. Deploy manually to staging/production
 
 **Automated Deployment (Phase 3)**
+
 1. Merge to `master`
 2. GitHub Actions automatically deploys to production
 3. No manual intervention needed
@@ -132,12 +135,14 @@ docker push gcr.io/project/lumina-care-web:latest
 ### Google Cloud Platform (Recommended)
 
 **1. Setup Project**
+
 ```bash
 gcloud projects create lumina-care
 gcloud config set project lumina-care
 ```
 
 **2. Deploy Backend**
+
 ```bash
 # Push to Artifact Registry
 docker push gcr.io/lumina-care/lumina-api:latest
@@ -154,6 +159,7 @@ gcloud run deploy lumina-api \
 ```
 
 **3. Deploy Frontend**
+
 ```bash
 gcloud run deploy lumina-web \
   --image gcr.io/lumina-care/lumina-web:latest \
@@ -165,6 +171,7 @@ gcloud run deploy lumina-web \
 ### AWS Deployment
 
 **1. ECR Setup**
+
 ```bash
 aws ecr create-repository --repository-name lumina-api
 aws ecr get-login-password | docker login --username AWS --password-stdin 123456789.dkr.ecr.us-east-1.amazonaws.com
@@ -173,6 +180,7 @@ docker push 123456789.dkr.ecr.us-east-1.amazonaws.com/lumina-api:latest
 ```
 
 **2. ECS Deployment**
+
 ```bash
 # Create ECS task definition and service
 aws ecs create-service \
@@ -232,6 +240,7 @@ NEW_RELIC_LICENSE_KEY=<new-relic-key>
 ## 🔒 Security Hardening
 
 ### HTTPS/TLS
+
 ```bash
 # AWS ACM Certificate
 aws acm request-certificate \
@@ -247,10 +256,12 @@ aws elbv2 create-listener \
 ```
 
 ### DDoS Protection
+
 - Enable CloudFlare or AWS Shield Standard (free)
 - Consider AWS Shield Advanced for enterprise
 
 ### Secrets Management
+
 ```bash
 # Store secrets in GitHub Secrets
 # OR use cloud native:
@@ -262,6 +273,7 @@ gcloud run deploy ... --update-secrets ANTHROPIC_API_KEY=ANTHROPIC_API_KEY:lates
 ```
 
 ### Database Encryption
+
 ```sql
 -- Enable encryption at rest (AWS RDS)
 aws rds create-db-instance \
@@ -333,24 +345,24 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Run tests
         run: make test
-      
+
       - name: Build Docker image
         run: |
           docker build -t gcr.io/project/api:${{ github.sha }} .
           docker push gcr.io/project/api:${{ github.sha }}
-      
+
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: lumina-api
           image: gcr.io/project/api:${{ github.sha }}
-          
+
       - name: Smoke test
         run: |
           curl https://api.lumina-care.example.com/health
@@ -377,7 +389,7 @@ gcloud run services update-traffic lumina-api \
 
 1. **Detect:** Monitoring alerts fire (error rate > 5%, latency > 2s)
 2. **Alert:** PagerDuty notification to on-call engineer
-3. **Respond:** 
+3. **Respond:**
    - Check logs: `kubectl logs -f deployment/lumina-api`
    - Check metrics: DataDog dashboard
    - Check dependencies: database, cache, AI service
@@ -408,18 +420,18 @@ spec:
   minReplicas: 2
   maxReplicas: 10
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
 ```
 
 ### Database Scaling
@@ -464,4 +476,3 @@ DATABASE_WRITE_URL=postgresql://...primary...
 
 **Status:** Phase 3 task  
 **Owner:** Platform Engineering Team
-

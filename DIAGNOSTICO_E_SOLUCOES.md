@@ -10,15 +10,15 @@
 
 O projeto **Lumina Care** está estruturalmente sólido mas **incompleto em 2 áreas críticas:**
 
-| Área | Status | Completude | Prioridade |
-|------|--------|-----------|-----------|
-| **Governança GitHub** | ✅ Completo | 100% | N/A |
-| **CI/CD Workflows** | ✅ Completo | 100% | N/A |
-| **Configurações Tooling** | ✅ Completo | 100% | N/A |
-| **Testes Unitários** | ❌ Faltando | 0% | 🔴 CRÍTICO |
-| **Documentação Técnica** | ❌ Faltando | 20% | 🔴 CRÍTICO |
-| **Branch Protection** | ❌ Não configurado | 0% | 🟠 ALTO |
-| **PhantomSeal CI** | ✅ Endurecido | 100% | N/A |
+| Área                      | Status             | Completude | Prioridade |
+| ------------------------- | ------------------ | ---------- | ---------- |
+| **Governança GitHub**     | ✅ Completo        | 100%       | N/A        |
+| **CI/CD Workflows**       | ✅ Completo        | 100%       | N/A        |
+| **Configurações Tooling** | ✅ Completo        | 100%       | N/A        |
+| **Testes Unitários**      | ❌ Faltando        | 0%         | 🔴 CRÍTICO |
+| **Documentação Técnica**  | ❌ Faltando        | 20%        | 🔴 CRÍTICO |
+| **Branch Protection**     | ❌ Não configurado | 0%         | 🟠 ALTO    |
+| **PhantomSeal CI**        | ✅ Endurecido      | 100%       | N/A        |
 
 **Próximas ações:** Implementar testes + documentação técnica
 
@@ -29,6 +29,7 @@ O projeto **Lumina Care** está estruturalmente sólido mas **incompleto em 2 á
 ### ✅ COMPLETO: Governança GitHub
 
 **Arquivos implementados:**
+
 - ✅ `LICENSE` (MIT com disclaimers de healthcare)
 - ✅ `CONTRIBUTING.md` (guia completo para contribuidores)
 - ✅ `CODE_OF_CONDUCT.md` (padrões de comunidade)
@@ -42,15 +43,16 @@ O projeto **Lumina Care** está estruturalmente sólido mas **incompleto em 2 á
 
 **5 workflows implementados e funcionando:**
 
-| Workflow | Arquivo | Cobertura | Status |
-|----------|---------|-----------|--------|
-| Frontend Tests | `frontend-tests.yml` | Next.js, Jest, type-check | ✅ Funcional |
-| Backend Tests | `backend-tests.yml` | FastAPI, pytest, PostgreSQL | ✅ Funcional |
-| PhantomSeal CI | `python-app.yml` | Signer/verify, exit codes | ✅ Endurecido |
-| Validate | `validate.yml` | Type-check, format, audit | ✅ Funcional |
-| Dependencies | `dependencies.yml` | npm audit, Python safety | ✅ Funcional |
+| Workflow       | Arquivo              | Cobertura                   | Status        |
+| -------------- | -------------------- | --------------------------- | ------------- |
+| Frontend Tests | `frontend-tests.yml` | Next.js, Jest, type-check   | ✅ Funcional  |
+| Backend Tests  | `backend-tests.yml`  | FastAPI, pytest, PostgreSQL | ✅ Funcional  |
+| PhantomSeal CI | `python-app.yml`     | Signer/verify, exit codes   | ✅ Endurecido |
+| Validate       | `validate.yml`       | Type-check, format, audit   | ✅ Funcional  |
+| Dependencies   | `dependencies.yml`   | npm audit, Python safety    | ✅ Funcional  |
 
 **Comandos disponíveis:**
+
 ```bash
 npm run test              # Jest tests (0 tests atualmente)
 npm run test:coverage    # Coverage report
@@ -67,14 +69,14 @@ npm run security:check   # npm audit
 
 **Configurações implementadas:**
 
-| Arquivo | Ferramenta | Status |
-|---------|-----------|--------|
-| `.eslintrc.json` | ESLint TypeScript | ✅ Configurado |
-| `.prettierrc.json` | Prettier v3 | ✅ Corrigido (opção deprecated) |
-| `jest.config.js` | Jest Testing | ✅ Pronto para testes |
-| `pyproject.toml` | Python tooling | ✅ Pronto para testes |
-| `.husky/pre-commit` | Pre-commit validation | ✅ Ativo |
-| `lint-staged.config.js` | Staged file linting | ✅ Ativo |
+| Arquivo                 | Ferramenta            | Status                          |
+| ----------------------- | --------------------- | ------------------------------- |
+| `.eslintrc.json`        | ESLint TypeScript     | ✅ Configurado                  |
+| `.prettierrc.json`      | Prettier v3           | ✅ Corrigido (opção deprecated) |
+| `jest.config.js`        | Jest Testing          | ✅ Pronto para testes           |
+| `pyproject.toml`        | Python tooling        | ✅ Pronto para testes           |
+| `.husky/pre-commit`     | Pre-commit validation | ✅ Ativo                        |
+| `lint-staged.config.js` | Staged file linting   | ✅ Ativo                        |
 
 **Status:** Tudo configurado, mas **sem testes para rodar**
 
@@ -88,6 +90,7 @@ npm run security:check   # npm audit
 **Configuração:** Pronta em `pyproject.toml`
 
 **Arquivos que precisam de testes:**
+
 - `src/api/main.py` — FastAPI app, middleware, exception handlers
 - `src/api/routers/triage.py` — Triage endpoints
 - `src/api/routers/insights.py` — Insights endpoints
@@ -98,6 +101,7 @@ npm run security:check   # npm audit
 **Cobertura esperada:** ≥80% (configurado em `pyproject.toml`)
 
 **Exemplo estrutura:**
+
 ```
 src/api/tests/
 ├── __init__.py
@@ -119,6 +123,7 @@ src/api/tests/
 **Configuração:** Pronta em `jest.config.js`
 
 **Padrões para testar:**
+
 - Componentes React
 - Hooks customizados
 - Integração com React Query
@@ -126,6 +131,7 @@ src/api/tests/
 - Layouts
 
 **Exemplo estrutura:**
+
 ```
 src/web/__tests__/
 ├── components/
@@ -147,16 +153,17 @@ src/web/__tests__/
 
 **Arquivos de documentação que faltam:**
 
-| Arquivo | Propósito | Prioridade |
-|---------|-----------|-----------|
-| `docs/SETUP.md` | Setup local, dependências | 🔴 CRÍTICO |
-| `docs/DEVELOPMENT.md` | Fluxo de desenvolvimento | 🔴 CRÍTICO |
-| `docs/TESTING.md` | Como rodar testes | 🔴 CRÍTICO |
-| `docs/API.md` | Documentação da API | 🟠 ALTO |
-| `docs/DATABASE.md` | Schema, migrações, queries | 🟠 ALTO |
-| `docs/DEPLOYMENT.md` | Guia de deploy | 🟠 ALTO |
+| Arquivo               | Propósito                  | Prioridade |
+| --------------------- | -------------------------- | ---------- |
+| `docs/SETUP.md`       | Setup local, dependências  | 🔴 CRÍTICO |
+| `docs/DEVELOPMENT.md` | Fluxo de desenvolvimento   | 🔴 CRÍTICO |
+| `docs/TESTING.md`     | Como rodar testes          | 🔴 CRÍTICO |
+| `docs/API.md`         | Documentação da API        | 🟠 ALTO    |
+| `docs/DATABASE.md`    | Schema, migrações, queries | 🟠 ALTO    |
+| `docs/DEPLOYMENT.md`  | Guia de deploy             | 🟠 ALTO    |
 
 **Documentação que existe:**
+
 - ✅ `docs/AI_STRATEGY.md`
 - ✅ `docs/ETHICS_AND_SAFETY.md`
 - ✅ `docs/PROBLEM_STATEMENT.md`
@@ -192,12 +199,14 @@ Rules:
 
 ### Problema 1: Zero Testes Implementados
 
-**Impacto:** 
+**Impacto:**
+
 - Workflows de teste não executam nada
 - Cobertura de código desconhecida
 - Risco de regressões não detectadas
 
 **Causa Raiz:**
+
 - Testes não foram implementados durante phase 2
 - Estrutura está pronta, implementação está faltando
 
@@ -206,6 +215,7 @@ Rules:
 ### Problema 2: Documentação Técnica Incompleta
 
 **Impacto:**
+
 - Novos desenvolvedores não sabem como:
   - Fazer setup local
   - Rodar testes
@@ -213,6 +223,7 @@ Rules:
   - Entender a API
 
 **Causa Raiz:**
+
 - Documentação focou em visão de produto e ética
 - Documentação operacional foi deixada para phase 3
 
@@ -221,11 +232,13 @@ Rules:
 ### Problema 3: Sem Proteção de Branch
 
 **Impacto:**
+
 - Código pode ser pushado sem CI/CD passar
 - Código pode ser pushado sem revisão
 - Branches podem ser deletadas acidentalmente
 
 **Causa Raiz:**
+
 - Branch protection não foi configurada
 - Requer acesso de administrador no GitHub
 
@@ -234,18 +247,17 @@ Rules:
 ### Problema 4: Validação Não Garante Testes
 
 **Impacto:**
+
 - Script `npm run validate` não falha se não houver testes
 - Jest não encontra testes (0 testes = sucesso)
 
 **Solução:**
+
 ```json
 {
   "jest": {
     "testMatch": ["**/__tests__/**/*.test.[jt]s?(x)"],
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
+    "collectCoverageFrom": ["src/**/*.{ts,tsx}", "!src/**/*.d.ts"],
     "coverageThreshold": {
       "global": {
         "branches": 70,
@@ -267,6 +279,7 @@ Rules:
 #### FastAPI Tests (Backend)
 
 **Passo 1:** Criar estrutura
+
 ```bash
 mkdir -p src/api/tests/{routers,models,services}
 touch src/api/tests/__init__.py
@@ -279,6 +292,7 @@ touch src/api/tests/models/test_schemas.py
 ```
 
 **Passo 2:** Implementar conftest.py (fixtures)
+
 ```python
 import pytest
 from fastapi.testclient import TestClient
@@ -303,6 +317,7 @@ def mock_anthropic():
 ```
 
 **Passo 3:** Implementar testes para cada router
+
 ```python
 def test_health_check(client):
     response = client.get("/health")
@@ -324,12 +339,14 @@ def test_readiness_check(client):
 #### Next.js Tests (Frontend)
 
 **Passo 1:** Criar estrutura
+
 ```bash
 mkdir -p src/web/__tests__/{components,hooks,lib,pages}
 touch src/web/__tests__/setup.ts
 ```
 
 **Passo 2:** Implementar testes de componentes
+
 ```typescript
 import { render, screen } from '@testing-library/react';
 import Button from '@/components/Button';
@@ -350,12 +367,13 @@ describe('Button Component', () => {
 ```
 
 **Passo 3:** Testar hooks e integração
-```typescript
-import { renderHook, act } from '@testing-library/react';
-import { useAuth } from '@/hooks/useAuth';
 
-describe('useAuth hook', () => {
-  it('initializes with null user', () => {
+```typescript
+import { renderHook, act } from "@testing-library/react";
+import { useAuth } from "@/hooks/useAuth";
+
+describe("useAuth hook", () => {
+  it("initializes with null user", () => {
     const { result } = renderHook(() => useAuth());
     expect(result.current.user).toBeNull();
   });
@@ -369,125 +387,157 @@ describe('useAuth hook', () => {
 ### Solução 2: Criar Documentação Técnica
 
 #### docs/SETUP.md
+
 ```markdown
 # Local Setup Guide
 
 ## Prerequisites
+
 - Node.js 20+
 - Python 3.11+
 - PostgreSQL 15
 - Redis 7
 
 ## Frontend Setup
+
 npm install
 npm run dev
 
 ## Backend Setup
+
 poetry install
 poetry run uvicorn src.api.main:app --reload
 
 ## Database
+
 poetry run python src/lib/db/migrate.ts
 
 ## Run Tests
-npm run test           # Frontend
-poetry run pytest      # Backend
+
+npm run test # Frontend
+poetry run pytest # Backend
 ```
 
 #### docs/DEVELOPMENT.md
+
 ```markdown
 # Development Workflow
 
 ## Branch Strategy
+
 - Feature: `feature/feature-name`
 - Bug fix: `fix/bug-name`
 - Hotfix: `hotfix/issue-name`
 
 ## Commit Convention
+
 Conventional Commits format
 
 ## Pre-commit Checks
+
 - Type checking
 - Linting
 - Formatting
 
 ## Running Locally
+
 ...
 ```
 
 #### docs/TESTING.md
+
 ```markdown
 # Testing Guide
 
 ## Unit Tests
+
 npm run test
 poetry run pytest
 
 ## Coverage
+
 npm run test:coverage
 poetry run pytest --cov
 
 ## Integration Tests
+
 npm run test:e2e
 poetry run pytest -m integration
 
 ## CI/CD
+
 Workflows validate automatically...
 ```
 
 #### docs/API.md
+
 ```markdown
 # API Documentation
 
 ## Base URL
+
 http://localhost:8000
 
 ## Endpoints
+
 - POST /api/v1/triage
 - POST /api/v1/insights
 - GET /api/v1/patients
 
 ## Authentication
+
 Bearer token in Authorization header
 
 ## Response Format
+
 ...
 ```
 
 #### docs/DATABASE.md
+
 ```markdown
 # Database Guide
 
 ## Schema
+
 Patient, Assessment, Risk Models
 
 ## Migrations
+
 poetry run python src/lib/db/migrate.ts
 
 ## Queries
+
 Common queries and examples
 
 ## Backup/Restore
+
 ...
 ```
 
 #### docs/DEPLOYMENT.md
+
 ```markdown
 # Deployment Guide
 
 ## Prerequisites
+
 AWS/GCP/Azure setup
 
 ## CI/CD Pipeline
+
 Workflows automatically deploy on merge to master
 
 ## Environment Variables
+
 DATABASE_URL, ANTHROPIC_API_KEY, etc.
 
 ## Monitoring
+
 Error tracking, performance metrics
 
 ## Rollback
+
 ...
 ```
 
@@ -510,6 +560,7 @@ Error tracking, performance metrics
    - ✅ Block deletions
 
 **Status checks obrigatórios:**
+
 - `frontend-tests / test`
 - `backend-tests / test`
 - `validate / validate`
@@ -520,6 +571,7 @@ Error tracking, performance metrics
 ### Solução 4: Adicionar Cobertura Mínima
 
 **Atualizar jest.config.js:**
+
 ```javascript
 module.exports = {
   coverageThreshold: {
@@ -527,13 +579,14 @@ module.exports = {
       branches: 70,
       functions: 70,
       lines: 70,
-      statements: 70
-    }
-  }
+      statements: 70,
+    },
+  },
 };
 ```
 
 **Atualizar pyproject.toml:**
+
 ```toml
 [tool.coverage.report]
 fail_under = 80
@@ -552,24 +605,24 @@ fail_under = 80
       - src/api/tests/conftest.py
       - src/api/tests/test_main.py
       - src/api/tests/routers/*.py
-      
+
 [ ] 2. Implementar testes principais do backend
       - Health checks
       - Triage endpoint
       - Insights endpoint
       - Patient endpoint
       Target: ≥80% coverage
-      
+
 [ ] 3. Criar estrutura de testes para Next.js
       - src/web/__tests__/setup.ts
       - src/web/__tests__/components/*.test.tsx
-      
+
 [ ] 4. Implementar testes principais do frontend
       - Componentes críticos
       - Hooks customizados
       - Integração com API
       Target: ≥70% coverage
-      
+
 [ ] 5. Validar CI/CD passa com testes
       - npm run test:coverage
       - poetry run pytest --cov
@@ -583,27 +636,27 @@ fail_under = 80
       - Instruções local setup
       - Dependências, versões
       - Quick start guide
-      
+
 [ ] 2. Documentação DEVELOPMENT
       - Branch strategy
       - Conventional commits
       - Development workflow
-      
+
 [ ] 3. Documentação TESTING
       - Como rodar testes
       - Coverage requirements
       - CI/CD pipeline
-      
+
 [ ] 4. Documentação API
       - Endpoints
       - Request/response examples
       - Authentication
-      
+
 [ ] 5. Documentação DATABASE
       - Schema diagram
       - Migrations
       - Common queries
-      
+
 [ ] 6. Documentação DEPLOYMENT
       - Environment setup
       - Deployment process
@@ -617,11 +670,11 @@ fail_under = 80
       - Require PR reviews
       - Require status checks
       - Block force pushes
-      
+
 [ ] 2. Configurar CODEOWNERS
       - Criar .github/CODEOWNERS
       - Designar reviewers por path
-      
+
 [ ] 3. Validar workflows passam
       - All status checks green
       - No forced commits
@@ -631,15 +684,15 @@ fail_under = 80
 
 ## 📊 Métricas de Sucesso
 
-| Métrica | Alvo | Status Atual |
-|---------|------|-------------|
-| Code Coverage (Backend) | ≥80% | 0% |
-| Code Coverage (Frontend) | ≥70% | 0% |
-| Test Count (Backend) | ≥50 | 0 |
-| Test Count (Frontend) | ≥30 | 0 |
-| Documentation Completeness | 100% | 40% |
-| Branch Protection Enabled | Yes | No |
-| CI/CD Status | All Green | Unknown (no tests) |
+| Métrica                    | Alvo      | Status Atual       |
+| -------------------------- | --------- | ------------------ |
+| Code Coverage (Backend)    | ≥80%      | 0%                 |
+| Code Coverage (Frontend)   | ≥70%      | 0%                 |
+| Test Count (Backend)       | ≥50       | 0                  |
+| Test Count (Frontend)      | ≥30       | 0                  |
+| Documentation Completeness | 100%      | 40%                |
+| Branch Protection Enabled  | Yes       | No                 |
+| CI/CD Status               | All Green | Unknown (no tests) |
 
 ---
 
@@ -701,4 +754,3 @@ npm run db:migrate
 **Date:** April 12, 2026  
 **Next Review:** Weekly  
 **Status:** Ready for Phase 3 Implementation
-

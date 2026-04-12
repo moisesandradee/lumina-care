@@ -16,6 +16,7 @@ Lumina Care uses:
 - **pytest-cov** — Coverage reporting
 
 **Test structure:**
+
 ```
 src/api/tests/
 ├── conftest.py              # Fixtures, mocks, setup
@@ -45,11 +46,13 @@ src/web/__tests__/
 ## 📊 Current Status
 
 **Backend Tests:**
+
 - ✅ 73 tests passing
 - ❌ 30 tests pending (waiting for router implementation)
 - 📍 Total: 109 tests
 
 **Frontend Tests:**
+
 - ⏳ To be implemented
 
 ---
@@ -79,6 +82,7 @@ make validate
 ### Manual Commands
 
 **Backend:**
+
 ```bash
 # All tests
 ANTHROPIC_API_KEY="sk-test-key" poetry run pytest src/api/tests/ -v
@@ -106,6 +110,7 @@ ANTHROPIC_API_KEY="sk-test-key" poetry run pytest-watch src/api/tests/
 ```
 
 **Frontend:**
+
 ```bash
 # All tests
 npm run test -- --coverage
@@ -309,7 +314,7 @@ describe('Button Component', () => {
   it('calls onClick handler', () => {
     const onClick = jest.fn();
     render(<Button onClick={onClick}>Click</Button>);
-    
+
     fireEvent.click(screen.getByText('Click'));
     expect(onClick).toHaveBeenCalled();
   });
@@ -347,20 +352,20 @@ describe('Card', () => {
 ### Testing Hooks
 
 ```typescript
-import { renderHook, act } from '@testing-library/react';
-import { useAuth } from '@/hooks/useAuth';
+import { renderHook, act } from "@testing-library/react";
+import { useAuth } from "@/hooks/useAuth";
 
-describe('useAuth hook', () => {
-  it('initializes with null user', () => {
+describe("useAuth hook", () => {
+  it("initializes with null user", () => {
     const { result } = renderHook(() => useAuth());
     expect(result.current.user).toBeNull();
   });
 
-  it('login sets user', async () => {
+  it("login sets user", async () => {
     const { result } = renderHook(() => useAuth());
 
     await act(async () => {
-      await result.current.login('user@example.com', 'password');
+      await result.current.login("user@example.com", "password");
     });
 
     expect(result.current.user).not.toBeNull();
@@ -371,16 +376,16 @@ describe('useAuth hook', () => {
 ### Testing API Calls
 
 ```typescript
-import { fetchPatients } from '@/api/patients';
-import axios from 'axios';
+import { fetchPatients } from "@/api/patients";
+import axios from "axios";
 
-jest.mock('axios');
+jest.mock("axios");
 
-describe('fetchPatients', () => {
-  it('fetches patients list', async () => {
+describe("fetchPatients", () => {
+  it("fetches patients list", async () => {
     const mockData = [
-      { id: '1', name: 'John' },
-      { id: '2', name: 'Jane' }
+      { id: "1", name: "John" },
+      { id: "2", name: "Jane" },
     ];
 
     (axios.get as jest.Mock).mockResolvedValue({ data: mockData });
@@ -388,7 +393,7 @@ describe('fetchPatients', () => {
     const result = await fetchPatients();
 
     expect(result).toEqual(mockData);
-    expect(axios.get).toHaveBeenCalledWith('/api/v1/patients');
+    expect(axios.get).toHaveBeenCalledWith("/api/v1/patients");
   });
 });
 ```
@@ -400,6 +405,7 @@ describe('fetchPatients', () => {
 ### Generate Coverage Report
 
 **Backend:**
+
 ```bash
 ANTHROPIC_API_KEY="sk-test-key" poetry run pytest src/api/tests/ \
   --cov=src/api \
@@ -411,6 +417,7 @@ open htmlcov/index.html
 ```
 
 **Frontend:**
+
 ```bash
 npm run test:coverage
 
@@ -421,26 +428,25 @@ open coverage/lcov-report/index.html
 ### Coverage Thresholds
 
 **Backend (pyproject.toml):**
+
 ```toml
 [tool.coverage.report]
 fail_under = 80  # 80% minimum
 ```
 
 **Frontend (jest.config.js):**
+
 ```javascript
 module.exports = {
-  collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts'
-  ],
+  collectCoverageFrom: ["src/**/*.{ts,tsx}", "!src/**/*.d.ts"],
   coverageThreshold: {
     global: {
       branches: 70,
       functions: 70,
       lines: 70,
-      statements: 70
-    }
-  }
+      statements: 70,
+    },
+  },
 };
 ```
 
@@ -472,15 +478,18 @@ module.exports = {
 ## 🔄 CI/CD Integration
 
 **Tests run automatically on:**
+
 - Push to `master` branch
 - Pull requests to `master`
 
 **Workflows:**
+
 - `backend-tests.yml` — FastAPI tests + coverage
 - `frontend-tests.yml` — Next.js tests + coverage
 - `validate.yml` — Type checking + linting
 
 **Required checks:**
+
 - ✅ All tests pass
 - ✅ Coverage ≥80% (backend)
 - ✅ Coverage ≥70% (frontend)
@@ -502,6 +511,7 @@ module.exports = {
 ### "ANTHROPIC_API_KEY not set"
 
 **Solution:**
+
 ```bash
 export ANTHROPIC_API_KEY="sk-test-key"
 poetry run pytest ...
@@ -510,6 +520,7 @@ poetry run pytest ...
 ### "Test timeout"
 
 **Solution:**
+
 ```bash
 # Increase timeout
 poetry run pytest --timeout=300
@@ -521,6 +532,7 @@ poetry run pytest -m "not slow"
 ### "Module not found"
 
 **Solution:**
+
 ```bash
 poetry install
 npm install
@@ -535,4 +547,3 @@ If integration tests fail, ensure PostgreSQL is running.
 ---
 
 **Next:** [DEVELOPMENT.md](./DEVELOPMENT.md) — Development workflow
-

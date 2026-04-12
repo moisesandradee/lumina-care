@@ -11,6 +11,7 @@ PostgreSQL schema, migrations, and operations.
 ### Core Tables
 
 #### patients
+
 ```sql
 CREATE TABLE patients (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -29,6 +30,7 @@ CREATE INDEX idx_patients_status ON patients(status);
 ```
 
 #### assessments
+
 ```sql
 CREATE TABLE assessments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -47,6 +49,7 @@ CREATE INDEX idx_assessments_date ON assessments(completed_at DESC);
 ```
 
 #### triage_results
+
 ```sql
 CREATE TABLE triage_results (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -68,6 +71,7 @@ CREATE INDEX idx_triage_created ON triage_results(created_at DESC);
 ```
 
 #### ai_insights
+
 ```sql
 CREATE TABLE ai_insights (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -87,6 +91,7 @@ CREATE INDEX idx_insights_created ON ai_insights(created_at DESC);
 ```
 
 #### audit_log
+
 ```sql
 CREATE TABLE audit_log (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -141,6 +146,7 @@ EOF
 ## 📊 Data Models (Python)
 
 ### Patient Schema
+
 ```python
 from pydantic import BaseModel, EmailStr
 
@@ -162,6 +168,7 @@ class PatientResponse(BaseModel):
 ```
 
 ### Assessment Schema
+
 ```python
 class AssessmentCreate(BaseModel):
     patient_id: str
@@ -184,6 +191,7 @@ class AssessmentCreate(BaseModel):
 ## 🔑 Queries
 
 ### Find Patients by Risk Level
+
 ```sql
 SELECT p.*, t.priority, t.created_at
 FROM patients p
@@ -193,6 +201,7 @@ ORDER BY t.created_at DESC;
 ```
 
 ### Recent Assessments
+
 ```sql
 SELECT p.name, a.assessment_type, a.score, a.completed_at
 FROM patients p
@@ -202,6 +211,7 @@ ORDER BY a.completed_at DESC;
 ```
 
 ### Patient Assessment History
+
 ```sql
 SELECT * FROM assessments
 WHERE patient_id = $1
@@ -209,6 +219,7 @@ ORDER BY completed_at DESC;
 ```
 
 ### AI Insights Without Review
+
 ```sql
 SELECT * FROM ai_insights
 WHERE human_reviewed = FALSE
@@ -222,6 +233,7 @@ ORDER BY created_at DESC;
 ### PII Encryption
 
 Sensitive fields should be encrypted:
+
 ```python
 from cryptography.fernet import Fernet
 
@@ -248,6 +260,7 @@ AND clinician_id IN (
 ### Audit Logging
 
 Every data access logged:
+
 ```python
 @app.get("/api/v1/patients/{patient_id}")
 async def get_patient(patient_id: str, current_user: User):
@@ -266,6 +279,7 @@ async def get_patient(patient_id: str, current_user: User):
 ## 📦 Backup & Recovery
 
 ### Backup
+
 ```bash
 # Full backup
 pg_dump -U postgres lumina_care > backup.sql
@@ -278,6 +292,7 @@ docker exec postgres-container pg_dump -U postgres lumina_care > backup.sql
 ```
 
 ### Restore
+
 ```bash
 # From SQL file
 psql -U postgres lumina_care < backup.sql
@@ -287,6 +302,7 @@ gunzip -c backup.sql.gz | psql -U postgres lumina_care
 ```
 
 ### Schedule Backups
+
 ```bash
 # Daily backup at 2am (crontab)
 0 2 * * * pg_dump -U postgres lumina_care | gzip > /backups/lumina_$(date +\%Y\%m\%d).sql.gz
@@ -297,12 +313,14 @@ gunzip -c backup.sql.gz | psql -U postgres lumina_care
 ## 🧹 Data Maintenance
 
 ### Delete Old Audit Logs
+
 ```sql
 DELETE FROM audit_log
 WHERE created_at < NOW() - INTERVAL '90 days';
 ```
 
 ### Archive Completed Assessments
+
 ```sql
 -- Move to archive table (if configured)
 INSERT INTO assessments_archive
@@ -314,6 +332,7 @@ WHERE completed_at < NOW() - INTERVAL '1 year';
 ```
 
 ### Vacuum & Analyze
+
 ```bash
 # Optimize database
 vacuumdb -U postgres lumina_care
@@ -328,6 +347,7 @@ analyzedb -U postgres lumina_care
 ## 🔍 Monitoring
 
 ### Check Database Size
+
 ```sql
 SELECT pg_database.datname,
        pg_size_pretty(pg_database_size(pg_database.datname))
@@ -336,6 +356,7 @@ WHERE datname = 'lumina_care';
 ```
 
 ### Table Sizes
+
 ```sql
 SELECT schemaname, tablename,
        pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename))
@@ -345,11 +366,13 @@ ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
 ```
 
 ### Active Connections
+
 ```sql
 SELECT datname, count(*) FROM pg_stat_activity GROUP BY datname;
 ```
 
 ### Slow Queries
+
 ```sql
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
@@ -364,6 +387,7 @@ LIMIT 10;
 ## 🆘 Troubleshooting
 
 ### Connection Refused
+
 ```bash
 # Check PostgreSQL running
 psql -U postgres -c "SELECT 1;"
@@ -375,6 +399,7 @@ docker restart postgres-container
 ```
 
 ### Disk Space
+
 ```bash
 # Check usage
 df -h /var/lib/postgresql
@@ -384,6 +409,7 @@ df -h /var/lib/postgresql
 ```
 
 ### Corruption
+
 ```bash
 # Verify
 vacuumdb --analyze-in-stages -U postgres lumina_care
@@ -395,4 +421,3 @@ reindexdb -U postgres lumina_care
 ---
 
 **Next:** [DEPLOYMENT.md](./DEPLOYMENT.md) — Deployment guide
-
