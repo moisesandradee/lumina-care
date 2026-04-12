@@ -8,12 +8,17 @@ on:
     branches: [ master ]
     paths:
       - 'phantom-seal/**'
+      - '.github/workflows/python-app.yml'
   pull_request:
     branches: [ master ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      DRY_RUN: "true"
+      CHAIN_ID: "11155111"
+      WALLET_PRIVATE_KEY: "0x59c6995e998f97a5a0044966f094538e2d7d2d0f2b2db9d6d7db4f2a6f6f6f6f"
     steps:
       - uses: actions/checkout@v4
 
@@ -25,18 +30,26 @@ jobs:
       - name: Install dependencies
         run: |
           cd phantom-seal
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run seal.py (dry-run)
+      - name: Create test document
         run: |
           cd phantom-seal
-          python scripts/seal.py --dry-run 2>&1 | tail -20
+          echo "test document" > test.txt
 
-      - name: Run verify.py
+      - name: Run signer in dry-run
         run: |
           cd phantom-seal
-          python scripts/verify.py 2>&1 | tail -10
+          python signer.py test.txt
 
-      - name: Check laudo was generated
+      - name: Run verify against generated evidence
         run: |
-          ls phantom-seal/evidence/
+          cd phantom-seal
+          EVIDENCE_FILE=$(ls -t evidence/seal_*.json | head -n 1)
+          python verify.py test.txt "$EVIDENCE_FILE"
+
+      - name: Check generated evidence
+        run: |
+          cd phantom-seal
+          ls -la evidence/
