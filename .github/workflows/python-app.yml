@@ -10,13 +10,14 @@ on:
     branches: [master]
     paths:
       - "phantom-seal/**"
+      - ".github/workflows/python-app.yml"
 
 concurrency:
   group: phantomseal-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  phantomseal-sign-verify:
+  test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -39,7 +40,7 @@ jobs:
         run: |
           set -e
           echo "Installing: web3, eth-account, python-dotenv"
-          pip install --no-cache-dir -q web3>=6.0 eth-account>=0.11.3 python-dotenv>=1.0
+          pip install --no-cache-dir -q "web3==6.15.1" "eth-account==0.11.3" "python-dotenv==1.0.1"
           echo "✓ Dependencies installed"
 
       - name: "Step 2/5: Create test document"
