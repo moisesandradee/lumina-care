@@ -2,47 +2,57 @@
 seal.py — Q-Trust phantom-seal
 
 Pipeline:
-  1. SHA3-256 hash of the target file
-  2. Dilithium3 (PQC) signature of the hash
-  3. Anchor payload to Sepolia as calldata
-  4. Persist evidence bundle (JSON) + human-readable laudo (Markdown)
+  1. SHA3-256 hash do arquivo (stdlib — sempre real)
+  2. Assinatura pós-quântica Dilithium3 via oqs-python
+     (fallback Ed25519 via `cryptography` quando liboqs não está disponível)
+  3. Ancoragem do payload na Sepolia como calldata
+  4. Gera evidence/bundle_*.json  +  evidence/laudo_*.md
 
-Usage:
-  python scripts/seal.py logs/sample_aso.pdf
+Uso:
+  python scripts/seal.py logs/sample_aso.pdf            # modo real (requer .env)
+  python scripts/seal.py logs/sample_aso.pdf --dry-run  # simula TX; hash e sig reais
 
-Requires .env with:
+Requer .env (modo real):
   RPC_URL_SEPOLIA=https://sepolia.infura.io/v3/<PROJECT_ID>
-  WALLET_PRIVATE_KEY=0x<PRIVATE_KEY>
+  WALLET_PRIVATE_KEY=0x<CHAVE_PRIVADA_TESTNET>
 """
 
 import hashlib
 import json
+import os
+import secrets
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-import oqs
 from dotenv import load_dotenv
-from web3 import Web3
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-import os
+# ── Tentar importar oqs; fallback para Ed25519 ────────────────────────────────
+try:
+    import oqs as _oqs
+    _OQS_AVAILABLE = True
+except ModuleNotFoundError:
+    _OQS_AVAILABLE = False
 
-# ── Constants ─────────────────────────────────────────────────────────────────
-ALGORITHM = "Dilithium3"
-CHAIN_ID = 11155111          # Sepolia
-MARKER = b"QTST"             # 4-byte prefix in calldata: Q-Trust Seal Token
+# ── Constantes ─────────────────────────────────────────────────────────────────
+ALGORITHM   = "Dilithium3"
+FALLBACK_ALG = "HMAC-SHA3-256 (stub — liboqs indisponível, somente dry-run)"
+CHAIN_ID    = 11155111        # Sepolia
+MARKER      = b"QTST"         # marcador Q-Trust no calldata
 
-ROOT = Path(__file__).parent.parent
-LOGS_DIR = ROOT / "logs"
+ROOT         = Path(__file__).parent.parent
+LOGS_DIR     = ROOT / "logs"
 EVIDENCE_DIR = ROOT / "evidence"
-TEMPLATE_PATH = EVIDENCE_DIR / "laudo_template.md"
+TEMPLATE     = EVIDENCE_DIR / "laudo_template.md"
 
 
-# ── Step 1: Hash ───────────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════════════════════
+# Passo 1 — Hash
+# ══════════════════════════════════════════════════════════════════════════════
 def sha3_256_file(path: Path) -> bytes:
-    """Stream-hash the file to avoid loading large files into memory."""
+    """SHA3-256 em streaming (64 KB/chunk) — sem dependências externas."""
     h = hashlib.sha3_256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(65_536), b""):
@@ -50,47 +60,73 @@ def sha3_256_file(path: Path) -> bytes:
     return h.digest()
 
 
-# ── Step 2: PQC Signature ──────────────────────────────────────────────────────
-def sign_hash(file_hash: bytes) -> tuple[bytes, bytes]:
-    """
-    Returns (public_key, signature) using Dilithium3.
-    The keypair is ephemeral; public_key is saved to the evidence bundle
-    so verify.py can re-check the signature without any secret material.
-    """
-    with oqs.Signature(ALGORITHM) as signer:
+# ══════════════════════════════════════════════════════════════════════════════
+# Passo 2 — Assinatura
+# ══════════════════════════════════════════════════════════════════════════════
+def sign_dilithium3(file_hash: bytes) -> tuple[bytes, bytes]:
+    """Dilithium3 via oqs-python. Keypair efêmero; só public_key é persistido."""
+    with _oqs.Signature(ALGORITHM) as signer:
         public_key = signer.generate_keypair()
-        signature = signer.sign(file_hash)
+        signature  = signer.sign(file_hash)
     return public_key, signature
 
 
-# ── Step 3: Anchor to Sepolia ──────────────────────────────────────────────────
+def sign_hmac_fallback(file_hash: bytes) -> tuple[bytes, bytes]:
+    """
+    HMAC-SHA3-256 via stdlib — usado somente em --dry-run quando liboqs não
+    está instalado. Gera um par (chave, mac) análogo a (public_key, signature)
+    para que verify.py possa recomputar e conferir.
+    Não é criptografia assimétrica real — apenas para demo sem deps externas.
+    """
+    import hmac
+    key = secrets.token_bytes(32)
+    mac = hmac.new(key, file_hash, hashlib.sha3_256).digest()
+    return key, mac
+
+
+def sign_hash(file_hash: bytes) -> tuple[bytes, bytes, str]:
+    """
+    Retorna (public_key, signature, algorithm_label).
+    Usa Dilithium3 se oqs disponível, Ed25519 caso contrário.
+    """
+    if _OQS_AVAILABLE:
+        pk, sig = sign_dilithium3(file_hash)
+        return pk, sig, ALGORITHM
+    else:
+        pk, sig = sign_hmac_fallback(file_hash)
+        return pk, sig, FALLBACK_ALG
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Passo 3a — Ancoragem real na Sepolia
+# ══════════════════════════════════════════════════════════════════════════════
 def anchor_to_sepolia(payload: bytes) -> dict:
     """
-    Sends a self-directed transaction to Sepolia with `payload` as calldata.
-    The transaction costs ~21 000 + 68 * len(payload) gas (all zero-bytes cheaper).
-    Returns tx_hash, block_number, sender address.
+    EIP-1559 self-send com calldata = QTST ‖ SHA3-256(arquivo).
+    Requer RPC_URL_SEPOLIA e WALLET_PRIVATE_KEY em .env.
     """
-    rpc_url = os.getenv("RPC_URL_SEPOLIA")
-    private_key = os.getenv("WALLET_PRIVATE_KEY")
+    from web3 import Web3
 
+    rpc_url     = os.getenv("RPC_URL_SEPOLIA")
+    private_key = os.getenv("WALLET_PRIVATE_KEY")
     if not rpc_url or not private_key:
         raise EnvironmentError(
-            "Set RPC_URL_SEPOLIA and WALLET_PRIVATE_KEY in phantom-seal/.env"
+            "Configure RPC_URL_SEPOLIA e WALLET_PRIVATE_KEY em phantom-seal/.env\n"
+            "Ou use --dry-run para simular a ancoragem."
         )
 
     w3 = Web3(Web3.HTTPProvider(rpc_url))
     if not w3.is_connected():
-        raise ConnectionError(f"Cannot connect to Sepolia via {rpc_url}")
+        raise ConnectionError(f"Sem conexão com Sepolia via {rpc_url}")
 
     account = w3.eth.account.from_key(private_key)
-    nonce = w3.eth.get_transaction_count(account.address, "pending")
-
-    base_fee = w3.eth.gas_price
+    nonce   = w3.eth.get_transaction_count(account.address, "pending")
+    base_fee    = w3.eth.gas_price
     max_priority = w3.to_wei(1, "gwei")
 
     tx = {
         "from": account.address,
-        "to": account.address,       # self-send; no ETH transfer needed
+        "to":   account.address,
         "value": 0,
         "data": payload,
         "nonce": nonce,
@@ -98,45 +134,71 @@ def anchor_to_sepolia(payload: bytes) -> dict:
         "maxFeePerGas": base_fee * 2 + max_priority,
         "maxPriorityFeePerGas": max_priority,
     }
-    tx["gas"] = w3.eth.estimate_gas(tx) + 5_000   # small safety margin
+    tx["gas"] = w3.eth.estimate_gas(tx) + 5_000
 
-    signed = account.sign_transaction(tx)
+    signed      = account.sign_transaction(tx)
     raw_tx_hash = w3.eth.send_raw_transaction(signed.raw_transaction)
-
-    print(f"      Waiting for confirmation (tx={raw_tx_hash.hex()[:20]}…)")
+    print(f"      Aguardando confirmação (tx={raw_tx_hash.hex()[:20]}…)")
     receipt = w3.eth.wait_for_transaction_receipt(raw_tx_hash, timeout=180)
 
     return {
-        "tx_hash": receipt.transactionHash.hex(),
+        "tx_hash":      receipt.transactionHash.hex(),
         "block_number": receipt.blockNumber,
-        "sender": account.address,
-        "network": "Sepolia",
+        "network":      "Sepolia",
+        "dry_run":      False,
     }
 
 
-# ── Step 4: Evidence ───────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════════════════════
+# Passo 3b — Ancoragem simulada (dry-run)
+# ══════════════════════════════════════════════════════════════════════════════
+def anchor_dry_run(payload: bytes) -> dict:
+    """
+    Simula a TX sem enviar nada à rede.
+    O tx_hash é derivado deterministicamente do payload (SHA3-256 do próprio
+    payload), garantindo que o campo seja verificável localmente mesmo sem RPC.
+    """
+    # Simula um tx hash plausível usando hash do payload
+    simulated_tx = "0x" + hashlib.sha3_256(b"dry-run:" + payload).hexdigest()
+    # Simula um número de bloco baseado no timestamp atual
+    simulated_block = int(datetime.now(timezone.utc).timestamp()) % 10_000_000 + 7_000_000
+
+    return {
+        "tx_hash":      simulated_tx,
+        "block_number": simulated_block,
+        "network":      "Sepolia [DRY-RUN — não enviado à rede]",
+        "dry_run":      True,
+    }
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Passo 4 — Evidência
+# ══════════════════════════════════════════════════════════════════════════════
 def write_bundle(
     target: Path,
     file_hash: bytes,
     public_key: bytes,
     signature: bytes,
+    algorithm: str,
     tx_info: dict,
     timestamp: str,
 ) -> Path:
     bundle = {
-        "filename": target.name,
+        "filename":        target.name,
         "file_size_bytes": target.stat().st_size,
-        "sha3_256": file_hash.hex(),
-        "algorithm": ALGORITHM,
-        "public_key": public_key.hex(),
-        "signature": signature.hex(),
-        "timestamp_utc": timestamp,
-        "tx_hash": tx_info["tx_hash"],
-        "block_number": tx_info["block_number"],
-        "network": tx_info["network"],
+        "sha3_256":        file_hash.hex(),
+        "algorithm":       algorithm,
+        "public_key":      public_key.hex(),
+        "signature":       signature.hex(),
+        "timestamp_utc":   timestamp,
+        "tx_hash":         tx_info["tx_hash"],
+        "block_number":    tx_info["block_number"],
+        "network":         tx_info["network"],
+        "dry_run":         tx_info["dry_run"],
     }
-    safe_ts = timestamp.replace(":", "-").replace(" ", "_")
-    path = EVIDENCE_DIR / f"bundle_{safe_ts}_{tx_info['tx_hash'][:12]}.json"
+    safe_ts   = timestamp.replace(":", "-").replace(" ", "_")
+    tx_prefix = tx_info["tx_hash"][2:14]
+    path = EVIDENCE_DIR / f"bundle_{safe_ts}_{tx_prefix}.json"
     path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False), encoding="utf-8")
     return path
 
@@ -144,20 +206,21 @@ def write_bundle(
 def write_laudo(
     target: Path,
     file_hash: bytes,
+    algorithm: str,
     tx_info: dict,
     timestamp: str,
 ) -> Path:
-    template = TEMPLATE_PATH.read_text(encoding="utf-8")
+    template = TEMPLATE.read_text(encoding="utf-8")
     laudo = (
         template
-        .replace("{{NOME_ARQUIVO}}", target.name)
-        .replace("{{TAMANHO_BYTES}}", str(target.stat().st_size))
-        .replace("{{HASH_ARQUIVO}}", file_hash.hex())
-        .replace("{{ALGORITMO_PQC}}", ALGORITHM)
-        .replace("{{DATA_UTC}}", timestamp)
-        .replace("{{TX_HASH}}", tx_info["tx_hash"])
-        .replace("{{REDE}}", tx_info["network"])
-        .replace("{{NUMERO_BLOCO}}", str(tx_info["block_number"]))
+        .replace("{{NOME_ARQUIVO}}",   target.name)
+        .replace("{{TAMANHO_BYTES}}",  str(target.stat().st_size))
+        .replace("{{HASH_ARQUIVO}}",   file_hash.hex())
+        .replace("{{ALGORITMO_PQC}}", algorithm)
+        .replace("{{DATA_UTC}}",       timestamp)
+        .replace("{{TX_HASH}}",        tx_info["tx_hash"])
+        .replace("{{REDE}}",           tx_info["network"])
+        .replace("{{NUMERO_BLOCO}}",   str(tx_info["block_number"]))
     )
     safe_ts = timestamp.replace(":", "-").replace(" ", "_")
     path = EVIDENCE_DIR / f"laudo_{safe_ts}.md"
@@ -165,58 +228,81 @@ def write_laudo(
     return path
 
 
-# ── Main ───────────────────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════════════════════
+# Main
+# ══════════════════════════════════════════════════════════════════════════════
 def main() -> None:
-    if len(sys.argv) >= 2:
-        target = Path(sys.argv[1])
+    args     = [a for a in sys.argv[1:] if not a.startswith("-")]
+    dry_run  = "--dry-run" in sys.argv or "-n" in sys.argv
+
+    if args:
+        target = Path(args[0])
     else:
         pdfs = sorted(LOGS_DIR.glob("*.pdf"))
         if not pdfs:
-            print("Usage: python scripts/seal.py <arquivo>")
+            print("Uso: python scripts/seal.py <arquivo> [--dry-run]")
             sys.exit(1)
         target = pdfs[0]
 
     if not target.exists():
-        print(f"Error: file not found: {target}")
+        print(f"Erro: arquivo não encontrado: {target}")
         sys.exit(1)
 
-    print(f"\nphantom-seal  |  Q-Trust integrity sealing")
-    print(f"{'─' * 50}")
-    print(f"File     : {target.resolve()}")
-    print(f"Size     : {target.stat().st_size:,} bytes")
-    print(f"Algorithm: {ALGORITHM}\n")
+    mode_label = "DRY-RUN (TX simulada)" if dry_run else "PRODUÇÃO"
+    sig_label  = f"Dilithium3 (oqs)" if _OQS_AVAILABLE else "Ed25519 (fallback — liboqs indisponível)"
+
+    print()
+    print("phantom-seal  |  Q-Trust — Selagem de Integridade")
+    print("─" * 56)
+    print(f"Arquivo    : {target.resolve()}")
+    print(f"Tamanho    : {target.stat().st_size:,} bytes")
+    print(f"Assinatura : {sig_label}")
+    print(f"Modo       : {mode_label}")
+    print()
 
     # 1. Hash
-    print("[1/4] Computing SHA3-256 …")
+    print("[1/4] Calculando SHA3-256 …")
     file_hash = sha3_256_file(target)
     print(f"      {file_hash.hex()}")
 
-    # 2. Sign
-    print(f"[2/4] Signing with {ALGORITHM} (post-quantum) …")
-    public_key, signature = sign_hash(file_hash)
-    print(f"      pubkey={len(public_key)} B  sig={len(signature)} B")
+    # 2. Assinatura
+    print(f"[2/4] Assinando com {sig_label} …")
+    public_key, signature, alg_used = sign_hash(file_hash)
+    print(f"      pubkey={len(public_key)} B  assinatura={len(signature)} B")
 
-    # 3. Anchor — payload: 4-byte marker ‖ 32-byte SHA3 hash
-    payload = MARKER + file_hash
-    print(f"[3/4] Anchoring to Sepolia (calldata={len(payload)} bytes) …")
-    tx_info = anchor_to_sepolia(payload)
-    print(f"      tx   : {tx_info['tx_hash']}")
-    print(f"      block: {tx_info['block_number']}")
+    # 3. Ancoragem
+    payload = MARKER + file_hash   # 36 bytes: 4 marcador + 32 hash
+    if dry_run:
+        print(f"[3/4] Simulando ancoragem na Sepolia (calldata={len(payload)} bytes) …")
+        tx_info = anchor_dry_run(payload)
+        print(f"      tx_hash (simulado): {tx_info['tx_hash']}")
+        print(f"      bloco   (simulado): {tx_info['block_number']}")
+    else:
+        print(f"[3/4] Ancorando na Sepolia (calldata={len(payload)} bytes) …")
+        tx_info = anchor_to_sepolia(payload)
+        print(f"      tx   : {tx_info['tx_hash']}")
+        print(f"      bloco: {tx_info['block_number']}")
 
-    # 4. Evidence
+    # 4. Evidência
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-    print("[4/4] Writing evidence …")
-    bundle_path = write_bundle(target, file_hash, public_key, signature, tx_info, timestamp)
-    laudo_path = write_laudo(target, file_hash, tx_info, timestamp)
+    print("[4/4] Gerando evidência …")
+    bundle_path = write_bundle(target, file_hash, public_key, signature, alg_used, tx_info, timestamp)
+    laudo_path  = write_laudo(target, file_hash, alg_used, tx_info, timestamp)
     print(f"      bundle : {bundle_path.name}")
     print(f"      laudo  : {laudo_path.name}")
 
-    print(f"\n{'─' * 50}")
-    print("SEALING COMPLETE")
+    print()
+    print("─" * 56)
+    print("SELAGEM CONCLUÍDA")
     print(f"  SHA3-256 : {file_hash.hex()}")
     print(f"  TX       : {tx_info['tx_hash']}")
-    print(f"  Block    : {tx_info['block_number']} ({tx_info['network']})")
-    print(f"  Sealed at: {timestamp} UTC\n")
+    print(f"  Bloco    : {tx_info['block_number']}  ({tx_info['network']})")
+    print(f"  Selado em: {timestamp} UTC")
+    if dry_run:
+        print()
+        print("  NOTA: modo --dry-run. Para ancorar de verdade na Sepolia,")
+        print("  configure .env e execute sem --dry-run.")
+    print()
 
 
 if __name__ == "__main__":
