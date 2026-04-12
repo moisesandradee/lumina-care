@@ -1,0 +1,47 @@
+# Lumina Care — Code Owners
+#
+# This file defines review ownership for the repository.
+# Rules are matched top-to-bottom; the LAST matching rule wins.
+#
+# See: https://docs.github.com/en/repositories/managing-your-repositories-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Enforcement requires branch protection to be configured with
+# "Require review from Code Owners" in GitHub repository settings.
+
+# ─────────────────────────────────────────────────────────────
+# Default owner — catches everything not matched below
+# ─────────────────────────────────────────────────────────────
+*                                   @moisesandradee
+
+# ─────────────────────────────────────────────────────────────
+# CI / CD — workflows must be reviewed by the repo owner
+# ─────────────────────────────────────────────────────────────
+/.github/                           @moisesandradee
+/.github/workflows/                 @moisesandradee
+/.github/CODEOWNERS                 @moisesandradee
+
+# ─────────────────────────────────────────────────────────────
+# PhantomSeal — isolated cryptographic signing subsystem
+# Any change here affects chain-of-custody evidence generation
+# ─────────────────────────────────────────────────────────────
+/phantom-seal/                      @moisesandradee
+/.github/workflows/python-app.yml   @moisesandradee
+
+# ─────────────────────────────────────────────────────────────
+# Backend API — FastAPI service
+# ─────────────────────────────────────────────────────────────
+/src/api/                           @moisesandradee
+
+# ─────────────────────────────────────────────────────────────
+# Frontend — Next.js web application
+# ─────────────────────────────────────────────────────────────
+/src/web/                           @moisesandradee
+
+# ─────────────────────────────────────────────────────────────
+# Governance & operational docs — source of truth
+# ─────────────────────────────────────────────────────────────
+/LICENSE                            @moisesandradee
+/SECURITY.md                        @moisesandradee
+/CODE_OF_CONDUCT.md                 @moisesandradee
+/CONTRIBUTING.md                    @moisesandradee
+/docs/REPO_STATUS.md                @moisesandradee
