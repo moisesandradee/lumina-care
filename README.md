@@ -21,6 +21,8 @@
 
 > **Sobre este repositório** — Lumina é um exercício de ideação de produto. O código é ilustrativo e os documentos representam uma proposta conceitual arquiteturalmente fundamentada. Este repositório não é um sistema em produção — é um artefato de design thinking: rigoroso na análise do problema, preciso na proposta de solução, honesto sobre o que ainda não existe.
 
+**📊 [Repository Status & Operational Reality](docs/REPO_STATUS.md)** — What works, what's partial, and what doesn't. Honest assessment of current CI/CD, testing, and stability.
+
 ---
 
 ## The Problem
