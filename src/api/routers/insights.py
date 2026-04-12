@@ -1,3 +1,7 @@
+# =============================================================================
+# ARQUIVO CONCEITUAL — Código ilustrativo para fins de ideação de produto.
+# Esta implementação representa uma proposta arquitetural, não código de produção.
+# =============================================================================
 """
 Lumina Care — Insights Router
 Endpoints for AI-generated clinical insights and team-level analytics.

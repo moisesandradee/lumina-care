@@ -1,26 +1,30 @@
-# Demo Guide — Lumina
+# Cenários de Uso Propostos — Lumina
 
-## Overview
+> **Documento de ideação.** Os cenários abaixo são propostas conceituais — descrevem como o Lumina se comportaria em uso real, não demonstrações de um sistema funcional.
 
-This directory contains demo scenarios, sample data, and walkthrough guides for evaluating Lumina in a development or demonstration context.
+## Visão Geral
+
+Este diretório contém cenários de uso, dados de exemplo e guias de walkthrough que ilustram o funcionamento proposto do Lumina em contexto clínico real.
 
 ---
 
-## Demo Scenario 1: Morning Triage Workflow
+## Cenário 1: Triagem da Manhã
 
-**Goal**: Demonstrate the priority queue and risk analysis capabilities.
+**Objetivo**: Ilustrar as capacidades de fila de prioridade e análise de risco.
 
-**Setup**:
-1. Start the application: `docker-compose up`
-2. Open `http://localhost:3000/dashboard`
-3. The dashboard displays a pre-populated mock priority queue
+**Proposta de experiência**:
+- Dashboard abre com fila de prioridade pré-calculada
+- Pacientes ordenados por score de risco
+- Badges de nível de risco (baixo / moderado / alto / agudo)
+- Indicador de dias-sem-contato com codificação de cores
+- Ação recomendada por paciente
+- Override clínico com um clique — sempre disponível
 
-**What to show**:
-- Priority queue ordered by risk score
-- Risk level badges (low / moderate / high / acute)
-- Days-since-contact indicator with color coding
-- Recommended action per patient
-- Override functionality with one click
+**Como seria no produto:**
+1. Profissional acessa `http://localhost:3000/dashboard`
+2. Visualiza fila priorizada gerada pelos modelos de risco
+3. Revisa os 3 pacientes com maior variação de sinal nas últimas 48h
+4. Confirma ou ajusta prioridade antes da reunião de equipe
 
 ---
 

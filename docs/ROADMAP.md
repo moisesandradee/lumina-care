@@ -1,33 +1,35 @@
-# Product Roadmap — Lumina
+# Roadmap do Produto — Lumina
 
-## Roadmap Philosophy
+> **Documento de ideação.** Este roadmap representa a trajetória conceitual proposta para o Lumina. As fases descrevem sequências lógicas de construção — não compromissos de entrega firmados.
 
-Lumina's roadmap is sequenced to build clinical trust before expanding clinical scope. We will not add capabilities faster than we can validate their safety and utility. Every phase ships something a clinician can genuinely use before we build the next layer.
+## Filosofia do Roadmap
+
+O roadmap do Lumina é sequenciado para construir confiança clínica antes de expandir o escopo clínico. Nenhuma capacidade seria adicionada mais rápido do que sua segurança e utilidade podem ser validadas. Cada fase entregaria algo que um clínico pode genuinamente usar antes de construir a próxima camada.
 
 ---
 
-## Phase 1 — Foundation (Current)
+## Fase 1 — Fundação (Conceito)
 
-**Objective**: Deliver a working, safe, deployable triage intelligence core.
+**Objetivo**: Entregar um núcleo de inteligência de triagem funcional, seguro e implantável.
 
-**Timeframe**: Q1–Q2
+**Horizonte estimado**: Q1–Q2
 
-**Deliverables:**
+**Entregas propostas:**
 
-| Feature | Description | Status |
+| Funcionalidade | Descrição | Status |
 |---|---|---|
-| Core API | FastAPI backend with auth, patient model, assessment endpoints | 🔄 In progress |
-| Risk Analysis Engine | PHQ-9, GAD-7, C-SSRS scoring and prioritization | 🔄 In progress |
-| AI Triage Service | Claude-powered signal analysis with structured output | 🔄 In progress |
-| Clinical Dashboard MVP | Priority queue, patient list, basic risk visualization | 📋 Planned |
-| Audit Logging | Immutable AI output and access log | 📋 Planned |
-| Auth & RBAC | JWT auth with role-based access (clinician/coordinator/director) | 📋 Planned |
-| Docker deployment | One-command local and cloud deployment | 📋 Planned |
+| Core API | Backend FastAPI com autenticação, modelo de paciente, endpoints de avaliação | 📐 Conceito |
+| Motor de Análise de Risco | Pontuação e priorização com PHQ-9, GAD-7, C-SSRS | 📐 Conceito |
+| Serviço de Triagem por IA | Análise de sinais via Claude com saída estruturada | 📐 Conceito |
+| Dashboard Clínico MVP | Fila de prioridade, lista de pacientes, visualização básica de risco | 📐 Conceito |
+| Log de Auditoria | Registro imutável de outputs de IA e acessos | 📐 Conceito |
+| Autenticação & RBAC | JWT com controle de acesso baseado em função (clínico/coordenador/diretor) | 📐 Conceito |
+| Deploy Docker | Implantação local e em nuvem com um comando | 📐 Conceito |
 
-**Exit criteria for Phase 1:**
-- API passes clinical review for safe output framing
-- Risk engine validated against reference datasets
-- Two clinicians complete user testing with positive usability feedback
+**Critérios de saída da Fase 1:**
+- API aprovada em revisão clínica para enquadramento seguro de outputs
+- Motor de risco validado contra conjuntos de dados de referência
+- Dois clínicos concluem testes de usabilidade com feedback positivo
 
 ---
 

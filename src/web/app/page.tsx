@@ -1,3 +1,7 @@
+// =============================================================================
+// ARQUIVO CONCEITUAL — Código ilustrativo para fins de ideação de produto.
+// Esta implementação representa uma proposta arquitetural, não código de produção.
+// =============================================================================
 import Link from "next/link";
 
 export default function Home() {

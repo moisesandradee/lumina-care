@@ -1,12 +1,14 @@
-# Product Vision — Lumina
+# Visão de Produto — Lumina
 
-## Vision Statement
+> **Documento de ideação.** Este documento articula a visão de um produto conceitual. Representa o que o Lumina propõe ser — não o que já está construído.
 
-Lumina exists to make mental health care more intelligent, continuous, and human — by giving clinical teams the signal clarity they need to act earlier, care better, and sustain themselves in the process.
+## Declaração de Visão
+
+O Lumina existe para tornar o cuidado em saúde mental mais inteligente, contínuo e humano — dando às equipes clínicas a clareza de sinal necessária para agir antes, cuidar melhor e se sustentar nesse processo.
 
 ---
 
-## The World We Are Building Toward
+## O Mundo que Esta Proposta Quer Construir
 
 In the future Lumina is working to create:
 

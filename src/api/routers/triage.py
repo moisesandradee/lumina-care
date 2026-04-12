@@ -1,3 +1,7 @@
+# =============================================================================
+# ARQUIVO CONCEITUAL — Código ilustrativo para fins de ideação de produto.
+# Esta implementação representa uma proposta arquitetural, não código de produção.
+# =============================================================================
 """
 Lumina Care — Triage Router
 Endpoints for psychosocial risk triage and patient priority queue.
