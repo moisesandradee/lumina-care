@@ -1,0 +1,4 @@
+cryptography
+oqs-python
+web3
+python-dotenv
