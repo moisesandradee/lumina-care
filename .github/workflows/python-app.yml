@@ -1,55 +1,115 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-name: phantom-seal CI
+name: PhantomSeal CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
     paths:
-      - 'phantom-seal/**'
-      - '.github/workflows/python-app.yml'
+      - "phantom-seal/**"
+      - ".github/workflows/python-app.yml"
   pull_request:
-    branches: [ master ]
+    branches: [master]
+    paths:
+      - "phantom-seal/**"
+      - ".github/workflows/python-app.yml"
+
+concurrency:
+  group: phantomseal-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     env:
       DRY_RUN: "true"
       CHAIN_ID: "11155111"
       WALLET_PRIVATE_KEY: "0x59c6995e998f97a5a0044966f094538e2d7d2d0f2b2db9d6d7db4f2a6f6f6f6f"
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Step 1/5 - Install minimal dependencies
+        working-directory: phantom-seal
         run: |
-          cd phantom-seal
+          set -e
+          echo "Installing: web3, eth-account, python-dotenv"
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install --no-cache-dir -q "web3==6.15.1" "eth-account==0.11.3" "python-dotenv==1.0.1"
+          echo "✓ Dependencies installed"
 
-      - name: Create test document
+      - name: Step 2/5 - Create test document
+        working-directory: phantom-seal
         run: |
-          cd phantom-seal
-          echo "test document" > test.txt
+          set -e
+          echo "test document content for phantom-seal validation" > test.txt
+          echo "✓ Test document created: test.txt"
 
-      - name: Run signer in dry-run
+      - name: Step 3/5 - Run signer.py
+        working-directory: phantom-seal
         run: |
-          cd phantom-seal
+          set -e
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Generating seal..."
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           python signer.py test.txt
+          echo "✓ Signer completed successfully"
 
-      - name: Run verify against generated evidence
+      - name: Step 4/5 - Verify evidence file exists
+        working-directory: phantom-seal
         run: |
-          cd phantom-seal
-          EVIDENCE_FILE=$(ls -t evidence/seal_*.json | head -n 1)
-          python verify.py test.txt "$EVIDENCE_FILE"
+          set -e
+          echo "Checking for generated evidence..."
+          if [ ! -d "evidence" ]; then
+            echo "ERROR: evidence/ directory does not exist"
+            exit 1
+          fi
+          ls -lh evidence/ || true
+          EVIDENCE_FILE=$(ls -t evidence/seal_*.json 2>/dev/null | head -n 1)
+          if [ -z "$EVIDENCE_FILE" ]; then
+            echo "ERROR: No evidence file found (expected: evidence/seal_*.json)"
+            echo "Contents of evidence/:"
+            ls -la evidence/ || echo "evidence/ is empty"
+            exit 1
+          fi
+          echo "Evidence file found: $EVIDENCE_FILE"
+          echo "EVIDENCE_FILE=$EVIDENCE_FILE" >> "$GITHUB_ENV"
 
-      - name: Check generated evidence
+      - name: Step 5/5 - Run verify.py
+        working-directory: phantom-seal
         run: |
-          cd phantom-seal
-          ls -la evidence/
+          set -e
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Validating seal..."
+          echo "Document: test.txt"
+          echo "Evidence: ${{ env.EVIDENCE_FILE }}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python verify.py test.txt "${{ env.EVIDENCE_FILE }}"
+          echo "✓ Verification passed"
+
+      - name: Report - PhantomSeal validation complete
+        if: success()
+        working-directory: phantom-seal
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "PhantomSeal Validation Complete"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "Evidence file generated:"
+          cat "${{ env.EVIDENCE_FILE }}"
+          echo ""
+          echo "File details:"
+          wc -c "${{ env.EVIDENCE_FILE }}"
+
+      - name: Cleanup - Remove test artifacts
+        if: always()
+        working-directory: phantom-seal
+        run: |
+          rm -f test.txt
+          echo "Cleanup complete (evidence retained for audit)"
