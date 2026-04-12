@@ -1,0 +1,14 @@
+# PhantomSeal CI Dependencies (Minimal)
+#
+# Usage:
+#   pip install -r requirements-ci.txt
+#
+# This is the minimal set required for signer.py and verify.py
+# to function in CI environment (DRY_RUN mode).
+#
+# For development (includes PQC testing, PDF generation):
+#   pip install -r requirements.txt
+
+web3>=6.0
+eth-account>=0.11.3
+python-dotenv>=1.0
