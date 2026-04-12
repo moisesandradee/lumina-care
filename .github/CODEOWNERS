@@ -1,0 +1,12 @@
+# Default owner
+* @moisesandradee
+
+# CI / workflows
+.github/ @moisesandradee
+
+# PhantomSeal
+phantom-seal/ @moisesandradee
+
+# Documentation
+docs/ @moisesandradee
+README.md @moisesandradee
