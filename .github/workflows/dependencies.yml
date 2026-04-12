@@ -1,0 +1,123 @@
+name: Dependencies Security
+
+on:
+  push:
+    branches: [master, main, develop]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "pyproject.toml"
+      - "src/api/requirements.txt"
+  pull_request:
+    branches: [master, main, develop]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "pyproject.toml"
+      - "src/api/requirements.txt"
+  schedule:
+    # Check dependencies daily at 2 AM UTC
+    - cron: "0 2 * * *"
+
+jobs:
+  node-audit:
+    name: npm Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Generate audit report
+        run: npm audit --json > npm-audit-report.json 2>/dev/null || true
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: npm-audit-report
+          path: npm-audit-report.json
+
+  python-audit:
+    name: Python Dependency Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install safety poetry
+          cd src/api && poetry install --no-root
+
+      - name: safety check
+        run: |
+          cd src/api
+          safety check --json > safety-report.json 2>/dev/null || true
+
+      - name: Upload safety report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-safety-report
+          path: src/api/safety-report.json
+
+  dependabot:
+    name: Dependabot Configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate dependabot config
+        run: |
+          if [ -f .github/dependabot.yml ]; then
+            echo "✅ Dependabot configured"
+          else
+            echo "⚠️ Consider enabling Dependabot for automatic updates"
+          fi
+        continue-on-error: true
+
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check licenses
+        run: |
+          npm install -g license-checker
+          license-checker --onlyunknown
+        continue-on-error: true

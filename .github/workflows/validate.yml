@@ -1,0 +1,77 @@
+name: Validate
+
+on:
+  push:
+    branches: [master, main, develop, claude/**]
+  pull_request:
+    branches: [master, main, develop]
+
+jobs:
+  validate:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type checking
+        run: npm run type-check
+
+      - name: Format check
+        run: npm run format:check
+        continue-on-error: true
+
+      - name: Security audit
+        run: npm run security:check
+        continue-on-error: true
+
+  changelog:
+    name: Changelog Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check CHANGELOG.md updated
+        run: |
+          if ! git diff --name-only ${{ github.base_ref }} | grep -q CHANGELOG.md; then
+            echo "⚠️ Consider updating CHANGELOG.md"
+          fi
+        continue-on-error: true
+
+  commit-lint:
+    name: Commit Message Quality
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: |
+          # Check each commit in the PR
+          for commit in $(git rev-list ${{ github.base_ref }}..HEAD); do
+            message=$(git log --format=%B -n 1 $commit)
+            if ! echo "$message" | grep -Eq '^(feat|fix|docs|test|chore|refactor|perf|security|ci|revert)'; then
+              echo "❌ Invalid commit: $commit"
+              echo "Message: $message"
+              exit 1
+            fi
+          done
+        continue-on-error: true
