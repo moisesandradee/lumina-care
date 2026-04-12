@@ -16,9 +16,15 @@ export default function Home() {
           <span className="font-semibold text-lg tracking-tight">Lumina</span>
         </div>
         <div className="flex items-center gap-6 text-sm text-slate-400">
-          <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
-          <Link href="/triage" className="hover:text-white transition-colors">Triage</Link>
-          <Link href="/patients" className="hover:text-white transition-colors">Patients</Link>
+          <Link href="/dashboard" className="hover:text-white transition-colors">
+            Dashboard
+          </Link>
+          <Link href="/triage" className="hover:text-white transition-colors">
+            Triage
+          </Link>
+          <Link href="/patients" className="hover:text-white transition-colors">
+            Patients
+          </Link>
           <Link
             href="/dashboard"
             className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg transition-colors"
@@ -42,9 +48,9 @@ export default function Home() {
         </h1>
 
         <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Lumina is an AI-native clinical intelligence platform that helps mental health
-          care teams detect psychosocial risk earlier, maintain care continuity, and act
-          with confidence — without replacing the human at the center of care.
+          Lumina is an AI-native clinical intelligence platform that helps mental health care teams
+          detect psychosocial risk earlier, maintain care continuity, and act with confidence —
+          without replacing the human at the center of care.
         </p>
 
         <div className="flex items-center justify-center gap-4">

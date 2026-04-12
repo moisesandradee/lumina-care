@@ -13,6 +13,7 @@ Este diretório contém cenários de uso, dados de exemplo e guias de walkthroug
 **Objetivo**: Ilustrar as capacidades de fila de prioridade e análise de risco.
 
 **Proposta de experiência**:
+
 - Dashboard abre com fila de prioridade pré-calculada
 - Pacientes ordenados por score de risco
 - Badges de nível de risco (baixo / moderado / alto / agudo)
@@ -21,6 +22,7 @@ Este diretório contém cenários de uso, dados de exemplo e guias de walkthroug
 - Override clínico com um clique — sempre disponível
 
 **Como seria no produto:**
+
 1. Profissional acessa `http://localhost:3000/dashboard`
 2. Visualiza fila priorizada gerada pelos modelos de risco
 3. Revisa os 3 pacientes com maior variação de sinal nas últimas 48h
@@ -33,6 +35,7 @@ Este diretório contém cenários de uso, dados de exemplo e guias de walkthroug
 **Goal**: Show the triage API processing assessment data and returning structured AI analysis.
 
 **Request**:
+
 ```bash
 curl -X POST http://localhost:8000/api/v1/triage/analyze \
   -H "Content-Type: application/json" \
@@ -67,6 +70,7 @@ curl -X POST http://localhost:8000/api/v1/triage/analyze \
 ## Demo Scenario 3: Team Intelligence Dashboard
 
 **API call**:
+
 ```bash
 curl "http://localhost:8000/api/v1/insights/team-summary?care_team_id=team_alpha"
 ```
@@ -80,6 +84,7 @@ curl "http://localhost:8000/api/v1/insights/team-summary?care_team_id=team_alpha
 **Goal**: Demonstrate hard-coded safety escalation logic.
 
 **Request** (same as Scenario 2, but with C-SSRS positive):
+
 ```json
 "cssrs": {
   "ideation_present": true,
@@ -96,5 +101,6 @@ curl "http://localhost:8000/api/v1/insights/team-summary?care_team_id=team_alpha
 ## Interactive API Documentation
 
 With the application running, visit:
+
 - **Swagger UI**: `http://localhost:8000/docs`
 - **ReDoc**: `http://localhost:8000/redoc`

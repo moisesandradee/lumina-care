@@ -140,9 +140,9 @@ Regardless of LLM output, the application layer applies these hard-coded safety 
 
 ## Prompt Version History
 
-| Version | Date | Change |
-|---|---|---|
-| 1.0 | 2024-04 | Initial MVP version |
+| Version | Date    | Change              |
+| ------- | ------- | ------------------- |
+| 1.0     | 2024-04 | Initial MVP version |
 
 ---
 

@@ -13,6 +13,7 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 **Precondition**: Patient panel data is current; at least one patient has new assessment data or a detected risk signal change
 
 **Flow:**
+
 1. Clinician opens Lumina dashboard
 2. Dashboard displays **Priority Queue** — patients ordered by risk signal change in the last 48 hours
 3. For each flagged patient, Lumina shows:
@@ -34,6 +35,7 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 **Precondition**: Patient has completed structured intake assessments
 
 **Flow:**
+
 1. Coordinator submits intake assessment data via Lumina's triage endpoint
 2. Lumina processes PHQ-9, GAD-7, and intake narrative (structured)
 3. Risk profile is generated within seconds:
@@ -55,6 +57,7 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 **Precondition**: Patient enrolled in between-session monitoring program; care plan specifies check-in cadence
 
 **Flow:**
+
 1. Patient completes brief digital check-in (PHQ-2 equivalent + 2 open-ended items)
 2. Lumina processes check-in response
 3. Risk analysis detects score increase + language patterns consistent with worsening state
@@ -74,6 +77,7 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 **Precondition**: Patient has active care plan with specified contact frequency
 
 **Flow:**
+
 1. System detects: patient with moderate risk profile has had no care contact in 14 days (care plan specifies 10-day maximum)
 2. Alert generated for assigned care coordinator: patient, risk level, days since last contact, care plan reference
 3. Coordinator reviews; context shows last interaction and current risk status
@@ -91,6 +95,7 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 **Precondition**: Patient has at least 60 days of data in Lumina
 
 **Flow:**
+
 1. Evening before scheduled session, Lumina generates session-prep briefing
 2. Clinician receives notification: "Session briefing ready for [Patient ID]"
 3. Briefing includes:
@@ -112,6 +117,7 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 **Precondition**: Team data populated; at least 60 days of operation
 
 **Flow:**
+
 1. Director opens Team Intelligence dashboard
 2. Views aggregate (de-identified) data:
    - Caseload distribution by risk level across team members
@@ -133,6 +139,7 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 **Precondition**: AI triage has generated a risk assessment the clinician considers incorrect
 
 **Flow:**
+
 1. Clinician views AI risk assessment for patient
 2. Clinician disagrees with severity estimate (e.g., AI flagged moderate; clinician assesses low based on contextual knowledge)
 3. Clinician clicks "Override"
@@ -146,9 +153,9 @@ Each use case below describes a concrete interaction pattern between a Lumina us
 
 ## Anti-Use Cases (What Lumina Explicitly Prevents)
 
-| Scenario | Why prevented |
-|---|---|
-| Using AI output to deny care | Access controls prevent risk data from being shared with non-clinical actors |
-| Automated response to acute safety signals | Hard-coded escalation to human clinician; no AI autonomous response |
-| Clinician delegating care decision to AI | Output schema and UX design make advisory framing unavoidable |
+| Scenario                                                              | Why prevented                                                                            |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Using AI output to deny care                                          | Access controls prevent risk data from being shared with non-clinical actors             |
+| Automated response to acute safety signals                            | Hard-coded escalation to human clinician; no AI autonomous response                      |
+| Clinician delegating care decision to AI                              | Output schema and UX design make advisory framing unavoidable                            |
 | Patient accessing their own AI risk scores without clinical mediation | Patient-facing access is out of scope; if implemented, requires clinical co-presentation |

@@ -109,6 +109,7 @@ Conflicts will be managed through recusal or transparency, depending on severity
 ## Attribution
 
 This Code of Conduct is adapted from:
+
 - [Contributor Covenant v2.1](https://www.contributor-covenant.org/)
 - [Python Community Code of Conduct](https://www.python.org/psf/conduct/)
 - [Django Code of Conduct](https://www.djangoproject.com/conduct/)
@@ -118,6 +119,7 @@ This Code of Conduct is adapted from:
 ## Questions or Concerns?
 
 For questions about this Code of Conduct:
+
 - 📧 Email: [project-email@example.com]
 - 💬 Open a Discussion: [GitHub Discussions](https://github.com/moisesandradee/lumina-care/discussions)
 - 📖 Read More: [Contributor Covenant](https://www.contributor-covenant.org/)

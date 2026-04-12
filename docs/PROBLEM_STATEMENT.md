@@ -11,6 +11,7 @@ The global mental health crisis is well-documented. What is less discussed is th
 Mental health clinicians make high-stakes decisions — about risk, about care intensity, about intervention — with limited, fragmented, and often stale information. This is not a failure of clinical skill. It is a failure of clinical infrastructure.
 
 The information that would enable better decisions exists. It is distributed across:
+
 - Assessment forms
 - Session notes
 - Patient-reported outcomes
@@ -24,13 +25,13 @@ But this information is **never synthesized, rarely surfaced proactively, and al
 
 ## The Consequences Are Measurable
 
-| Consequence | Scale |
-|---|---|
-| Treatment gap globally | >70% of people with mental health conditions receive no treatment |
-| Average delay to first treatment | 11 years from symptom onset |
-| Crisis-driven care | A significant proportion of first psychiatric contacts occur in emergency settings |
-| Clinician burnout | Among the highest of any healthcare profession, driven partly by administrative overload |
-| Care continuity failure | Between 30–50% of patients disengage from outpatient mental health treatment within the first year |
+| Consequence                      | Scale                                                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Treatment gap globally           | >70% of people with mental health conditions receive no treatment                                  |
+| Average delay to first treatment | 11 years from symptom onset                                                                        |
+| Crisis-driven care               | A significant proportion of first psychiatric contacts occur in emergency settings                 |
+| Clinician burnout                | Among the highest of any healthcare profession, driven partly by administrative overload           |
+| Care continuity failure          | Between 30–50% of patients disengage from outpatient mental health treatment within the first year |
 
 These are not inevitable. They are the downstream effects of a system that lacks the intelligence infrastructure to function well under pressure.
 
@@ -39,18 +40,23 @@ These are not inevitable. They are the downstream effects of a system that lacks
 ## The Specific Gaps Lumina Addresses
 
 ### Gap 1: Reactive triage
+
 Triage in most mental health services is based on static, point-in-time assessments at intake. There is no mechanism to detect changing risk between appointments — until the patient presents in crisis or stops showing up entirely.
 
 ### Gap 2: Discontinuous care journeys
+
 Mental health recovery is non-linear. Patients cycle through periods of stability and instability that do not align with scheduled appointment cadences. Care teams have no real-time view of where a patient is in their trajectory between sessions.
 
 ### Gap 3: Data-poor clinical decisions
+
 Clinicians routinely make risk assessments and care intensity decisions without access to longitudinal signal data. The PHQ-9 from three months ago may be the most recent structured data available — not because better data doesn't exist, but because no system is aggregating and presenting it usefully.
 
 ### Gap 4: Care coordination overhead
+
 For complex patients receiving care from multiple providers, coordination is primarily manual — emails, phone calls, shared documents. The cognitive overhead of coordination reduces time available for direct clinical work.
 
 ### Gap 5: No early warning system
+
 There is no equivalent, in most mental health services, of the early warning score systems used in acute medical settings. Deterioration is detected late because there is no systematic way to detect it early.
 
 ---

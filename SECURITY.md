@@ -51,7 +51,7 @@ from pydantic import BaseModel, validator
 
 class PatientInput(BaseModel):
     phq9_score: int
-    
+
     @validator('phq9_score')
     def validate_score(cls, v):
         if not 0 <= v <= 27:
@@ -89,9 +89,9 @@ async def get_current_clinician(
 // ✅ GOOD: Redact PII before logging
 const redactPII = (text: string): string => {
   return text
-    .replace(/\b\d{3}-\d{2}-\d{4}\b/g, 'XXX-XX-XXXX')  // SSN
-    .replace(/\b\d{10}\b/g, 'XXXXXXXXXX')              // Phone
-    .replace(/[\w\.-]+@[\w\.-]+\.\w+/g, '[EMAIL]');    // Email
+    .replace(/\b\d{3}-\d{2}-\d{4}\b/g, "XXX-XX-XXXX") // SSN
+    .replace(/\b\d{10}\b/g, "XXXXXXXXXX") // Phone
+    .replace(/[\w\.-]+@[\w\.-]+\.\w+/g, "[EMAIL]"); // Email
 };
 
 // ❌ BAD: Logging PHI unencrypted

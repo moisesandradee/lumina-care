@@ -25,6 +25,7 @@ This is not modesty. It is a deliberate product strategy grounded in three belie
 **What it does not do**: Diagnose. Predict with certainty. Make clinical decisions.
 
 **How it works**:
+
 ```
 Input: Structured patient signals (de-identified)
        + Temporal context (trend data, care gaps)
@@ -63,14 +64,18 @@ Output: Structured JSON with:
 Lumina uses a layered prompt architecture designed for clinical safety:
 
 ### Layer 1: System Prompt (Fixed, versioned)
+
 Establishes the AI's clinical role, capabilities, and hard constraints:
+
 - "You are a clinical decision support system, not a diagnostic tool"
 - "You must never suggest a specific diagnosis"
 - "If acute safety risk is detected, escalation is mandatory regardless of other analysis"
 - "All outputs must include confidence estimates and reasoning"
 
 ### Layer 2: Clinical Context Template
+
 Injects patient context using a strict schema — no free-text PII, only structured clinical signals:
+
 ```
 Assessment scores: {phq9_score}, {gad7_score}, {cssrs_flag}
 Trend direction: {symptom_trend_30d}
@@ -79,9 +84,11 @@ Active flags: {open_risk_flags}
 ```
 
 ### Layer 3: Task-Specific Request
+
 Specifies what kind of analysis or output is required, with explicit output schema.
 
 ### Layer 4: Output Validation
+
 Every AI response is validated against a Pydantic schema before being passed to the application layer. Malformed or out-of-bounds responses trigger graceful fallback to manual review queue.
 
 ---
@@ -91,6 +98,7 @@ Every AI response is validated against a Pydantic schema before being passed to 
 **Primary model**: Anthropic Claude (claude-3-5-sonnet)
 
 **Why Claude**:
+
 - Strong performance on structured reasoning tasks
 - Reliable adherence to system prompt constraints
 - Consistently refuses inappropriate clinical requests
@@ -104,22 +112,27 @@ Every AI response is validated against a Pydantic schema before being passed to 
 ## AI Governance Model
 
 ### Transparency
+
 - Every AI output is labeled as AI-generated
 - Confidence scores are always displayed alongside outputs
 - Reasoning is always accessible — never hidden in a black box
 
 ### Accountability
+
 - Every AI interaction is logged with model version, prompt hash, and output hash
 - Clinical overrides are recorded and attributed
 - Monthly model performance review against clinical outcome data (when available)
 
 ### Continuous Improvement
+
 - Override rates by output type are monitored (high override rate = low utility)
 - Clinician feedback can be attached to any AI output
 - Prompt versions are tracked and A/B testable
 
 ### Hard Limits
+
 These behaviors are hardcoded and not configurable by any user:
+
 - Acute safety risk signals always trigger human escalation
 - No clinical decision can be attributed to AI alone in any documentation
 - AI outputs cannot be shared directly with patients without clinician review
@@ -128,12 +141,12 @@ These behaviors are hardcoded and not configurable by any user:
 
 ## What We Are Not Building
 
-| AI pattern | Why we reject it |
-|---|---|
-| Autonomous treatment recommendations | Requires clinical licensure and accountability |
-| Patient-facing mental health chatbot | Different risk profile, different regulatory posture |
-| Predictive readmission scoring for payers | Risk of discriminatory insurance application |
-| Sentiment analysis of therapy transcripts | Patient trust and consent implications too complex for v1 |
-| Autonomous clinical note generation | Documentation accuracy is a clinical and legal responsibility |
+| AI pattern                                | Why we reject it                                              |
+| ----------------------------------------- | ------------------------------------------------------------- |
+| Autonomous treatment recommendations      | Requires clinical licensure and accountability                |
+| Patient-facing mental health chatbot      | Different risk profile, different regulatory posture          |
+| Predictive readmission scoring for payers | Risk of discriminatory insurance application                  |
+| Sentiment analysis of therapy transcripts | Patient trust and consent implications too complex for v1     |
+| Autonomous clinical note generation       | Documentation accuracy is a clinical and legal responsibility |
 
 These are not permanent exclusions — some may be revisited with appropriate clinical validation and ethics review. But they are out of scope for the current phase of development.

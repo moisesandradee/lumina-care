@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "next"
-  ],
+  "extends": ["next/core-web-vitals", "next"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -50,10 +47,7 @@
           "jsx": true
         }
       },
-      "extends": [
-        "next/core-web-vitals",
-        "plugin:@typescript-eslint/recommended"
-      ]
+      "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"]
     },
     {
       "files": ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**/*"],

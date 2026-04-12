@@ -91,6 +91,7 @@ security/issue-name     → Security fixes
 ```
 
 **Example:**
+
 ```bash
 git checkout -b feat/intelligent-triage-v2
 ```
@@ -98,6 +99,7 @@ git checkout -b feat/intelligent-triage-v2
 ### 2. Write Code
 
 **Frontend (Next.js/TypeScript):**
+
 - Follow [TypeScript strict mode](https://www.typescriptlang.org/tsconfig#strict)
 - Use functional components with hooks
 - Prefer React Query for data fetching
@@ -105,6 +107,7 @@ git checkout -b feat/intelligent-triage-v2
 - Run `npm run type-check` to validate
 
 **Backend (FastAPI/Python):**
+
 - Follow [PEP 8](https://pep8.org/) style guide
 - Use type hints (Python 3.11+)
 - Validate with Pydantic
@@ -154,6 +157,7 @@ Use **Conventional Commits** format:
 ```
 
 **Types:**
+
 - `feat`: A new feature
 - `fix`: A bug fix
 - `docs`: Documentation changes
@@ -164,6 +168,7 @@ Use **Conventional Commits** format:
 - `security`: Security-related fixes
 
 **Example:**
+
 ```
 feat(triage): add risk score normalization for C-SSRS
 
@@ -174,7 +179,8 @@ feat(triage): add risk score normalization for C-SSRS
 Closes #42
 ```
 
-**Important:** 
+**Important:**
+
 - Keep commits atomic (one logical change per commit)
 - Write descriptive commit messages
 - Reference GitHub issues: `Closes #123`, `Fixes #456`
@@ -203,33 +209,40 @@ When creating a PR, include:
 
 ```markdown
 ## 📝 Description
+
 Brief summary of changes.
 
 ## 🎯 Type of Change
+
 - [ ] Bug fix (non-breaking)
 - [ ] New feature (non-breaking)
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## 📋 Related Issues
+
 Closes #123
 
 ## ✅ Testing
+
 - [ ] Added unit tests
 - [ ] Added integration tests
 - [ ] Manual testing completed
 - [ ] No regressions detected
 
 ## 📚 Documentation
+
 - [ ] Updated README if needed
 - [ ] Updated API docs if applicable
 - [ ] Added/updated code comments
 - [ ] Updated CHANGELOG
 
 ## ⚠️ Breaking Changes
+
 None / Description if applicable
 
 ## 🔍 Checklist
+
 - [ ] Code follows style guidelines
 - [ ] Self-review completed
 - [ ] Comments added for complex logic
@@ -320,13 +333,13 @@ def test_triage_analysis():
 ```typescript
 /**
  * Analyzes patient risk signals using Claude AI
- * 
+ *
  * @param patientData - Patient assessment data
  * @returns Promise<RiskAnalysis> - Structured risk assessment with confidence scores
- * 
+ *
  * @throws {ValidationError} If patient data is invalid
  * @throws {AIServiceError} If Claude API fails
- * 
+ *
  * @example
  * const analysis = await analyzeRisk(patientData);
  * console.log(analysis.riskLevel);
@@ -354,28 +367,35 @@ Use the **Bug Report** template:
 
 ```markdown
 ## 🐛 Bug Description
+
 Clear and concise description of what the bug is.
 
 ## 📍 Steps to Reproduce
+
 1. Go to...
 2. Click on...
 3. See error
 
 ## 🎯 Expected Behavior
+
 What should happen
 
 ## 😞 Actual Behavior
+
 What actually happens
 
 ## 📸 Screenshots
+
 If applicable
 
 ## 💻 Environment
+
 - OS: [e.g. macOS 14.1]
 - Node version: [e.g. 20.10]
 - Browser: [if applicable]
 
 ## 🔍 Additional Context
+
 Any other context
 ```
 
@@ -385,18 +405,23 @@ Use the **Feature Request** template:
 
 ```markdown
 ## 📋 Summary
+
 Brief description of the feature
 
 ## 🎯 Problem Statement
+
 What problem does this solve?
 
 ## 💡 Proposed Solution
+
 How should this work?
 
 ## 🔍 Alternatives Considered
+
 Any alternatives?
 
 ## 🎁 Additional Context
+
 Relevant information
 ```
 

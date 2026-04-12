@@ -66,6 +66,11 @@ jobs:
       - name: Validate commit messages
         run: |
           # Check each commit in the PR
+          if [ -z "${{ github.base_ref }}" ]; then
+            echo "⚠️ No base ref available (not a PR), skipping commit validation"
+            exit 0
+          fi
+
           for commit in $(git rev-list ${{ github.base_ref }}..HEAD); do
             message=$(git log --format=%B -n 1 $commit)
             if ! echo "$message" | grep -Eq '^(feat|fix|docs|test|chore|refactor|perf|security|ci|revert)'; then

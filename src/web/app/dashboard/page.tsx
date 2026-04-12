@@ -115,10 +115,7 @@ export default function DashboardPage() {
               color: "text-slate-300",
             },
           ].map((stat) => (
-            <div
-              key={stat.label}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-5"
-            >
+            <div key={stat.label} className="bg-slate-900 border border-slate-800 rounded-xl p-5">
               <p className="text-slate-500 text-xs uppercase tracking-wide mb-1">{stat.label}</p>
               <p className={`text-3xl font-bold ${stat.color}`}>{stat.value}</p>
             </div>
@@ -198,9 +195,7 @@ export default function DashboardPage() {
                       <span className="text-xs text-slate-500 italic">Overridden</span>
                     ) : (
                       <button
-                        onClick={() =>
-                          setOverriddenIds((prev) => new Set([...prev, patient.id]))
-                        }
+                        onClick={() => setOverriddenIds((prev) => new Set([...prev, patient.id]))}
                         className="text-xs text-slate-500 hover:text-slate-300 border border-slate-700 hover:border-slate-500 px-3 py-1.5 rounded transition-colors"
                       >
                         Override

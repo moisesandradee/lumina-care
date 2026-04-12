@@ -36,6 +36,7 @@ Lumina is an AI-native clinical intelligence platform that gives mental health c
 3. **Clinical Decision Support** — AI-generated session preparation briefings and team analytics, structured for clinical utility
 
 **What makes Lumina different:**
+
 - Ethics-first architecture — AI that is explicitly bounded, explainable, and always overridable
 - Designed for clinical trust — outputs clinicians can explain to colleagues, supervisors, and patients
 - Between-session reach — the only layer of the care system monitoring the space between appointments
@@ -47,6 +48,7 @@ Lumina is an AI-native clinical intelligence platform that gives mental health c
 **Target market**: Digital health platforms, integrated behavioral health organizations, outpatient mental health services
 
 **Revenue model**: B2B SaaS
+
 - Per-seat licensing for care team access
 - Volume-based pricing for patient panel size
 - Enterprise: custom integration and deployment
@@ -58,6 +60,7 @@ Lumina is an AI-native clinical intelligence platform that gives mental health c
 ## Traction and Status
 
 Lumina is currently in **MVP development (Phase 1)**:
+
 - Core API and risk analysis engine under development
 - Clinical prompt architecture designed and under review
 - Foundational ethical framework documented
@@ -68,6 +71,7 @@ Lumina is currently in **MVP development (Phase 1)**:
 ## Team Need
 
 To reach production, Lumina needs:
+
 - **Clinical advisory board**: 2–3 licensed mental health clinicians to validate clinical logic and pilot the product
 - **Engineering**: Backend engineer with healthcare data experience
 - **Clinical partnerships**: First pilot site for controlled deployment and outcome validation

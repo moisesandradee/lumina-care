@@ -63,6 +63,7 @@ python scripts/seal.py logs/sample_aso.pdf
 ```
 
 Saída:
+
 ```
 [1/4] Computing SHA3-256 …
 [2/4] Signing with Dilithium3 (post-quantum) …
@@ -81,6 +82,7 @@ python scripts/verify.py logs/sample_aso.pdf evidence/bundle_<...>.json
 ```
 
 Resultado:
+
 ```
 [1/3] SHA3-256 hash   : PASS
 [2/3] On-chain anchor : PASS
@@ -101,12 +103,12 @@ dependência de contratos ou infraestrutura proprietária.
 
 ## Dependências principais
 
-| Biblioteca | Função |
-|---|---|
-| `oqs-python` | Dilithium3 via liboqs (NIST PQC Round 3) |
-| `web3.py` | Submissão e consulta na Sepolia |
-| `cryptography` | Suporte a primitivas criptográficas auxiliares |
-| `python-dotenv` | Carregamento seguro de credenciais |
+| Biblioteca      | Função                                         |
+| --------------- | ---------------------------------------------- |
+| `oqs-python`    | Dilithium3 via liboqs (NIST PQC Round 3)       |
+| `web3.py`       | Submissão e consulta na Sepolia                |
+| `cryptography`  | Suporte a primitivas criptográficas auxiliares |
+| `python-dotenv` | Carregamento seguro de credenciais             |
 
 ## Limitações desta POC
 

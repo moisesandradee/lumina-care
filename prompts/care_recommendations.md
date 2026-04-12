@@ -8,6 +8,7 @@
 ## Design Principles
 
 This prompt serves care coordinators — not clinicians. Outputs must be:
+
 - Actionable without clinical expertise to interpret
 - Framed as "suggested next steps" not clinical directives
 - Free of clinical jargon

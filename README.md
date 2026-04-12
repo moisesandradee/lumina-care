@@ -2,7 +2,7 @@
 
 # Lumina
 
-### *From signal to care. From data to empathy.*
+### _From signal to care. From data to empathy._
 
 **An AI-native mental health intelligence platform that helps clinical teams detect psychosocial risk earlier, support care journeys with greater precision, and act with confidence — without replacing the human at the center of care.**
 
@@ -30,6 +30,7 @@ Mental health care operates in a fog.
 Clinical teams face overwhelming caseloads, fragmented information, and no reliable way to distinguish who is deteriorating from who is stable — until a crisis makes the answer undeniable. By then, the window for early intervention has already closed.
 
 The consequences are systemic:
+
 - **Triage is reactive**, not predictive
 - **Care journeys are discontinuous** — patients fall through the cracks between appointments
 - **Clinical decision-making is data-poor** despite the existence of relevant signals
@@ -53,11 +54,11 @@ Patient signal → Lumina intelligence layer → Clinician insight → Better ca
 
 Lumina operates across three core capabilities:
 
-| Capability | What it does |
-|---|---|
-| **Intelligent Triage** | Analyzes incoming signals to prioritize patient attention by psychosocial risk |
+| Capability                    | What it does                                                                        |
+| ----------------------------- | ----------------------------------------------------------------------------------- |
+| **Intelligent Triage**        | Analyzes incoming signals to prioritize patient attention by psychosocial risk      |
 | **Care Journey Intelligence** | Tracks continuity of care, flags gaps, and models longitudinal patient trajectories |
-| **Clinical Decision Support** | Surfaces evidence-based recommendations tailored to individual patient context |
+| **Clinical Decision Support** | Surfaces evidence-based recommendations tailored to individual patient context      |
 
 ---
 
@@ -104,6 +105,7 @@ The proposed platform follows a **layered intelligence architecture**:
 ## Technology Stack
 
 ### Backend
+
 - **Runtime**: Python 3.11
 - **Framework**: FastAPI
 - **AI**: Anthropic Claude API (via structured clinical prompts)
@@ -112,6 +114,7 @@ The proposed platform follows a **layered intelligence architecture**:
 - **Infrastructure**: Docker + Docker Compose
 
 ### Frontend
+
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 3
@@ -120,6 +123,7 @@ The proposed platform follows a **layered intelligence architecture**:
 - **Component library**: Radix UI primitives
 
 ### AI & Clinical Logic
+
 - **LLM Provider**: Anthropic Claude
 - **Prompt architecture**: Structured clinical prompts with safety constraints (see [`prompts/`](prompts/))
 - **Risk frameworks**: PHQ-9, GAD-7, C-SSRS, WHO-5
@@ -130,18 +134,23 @@ The proposed platform follows a **layered intelligence architecture**:
 ## Use Cases
 
 ### 1. Morning Clinical Huddle Support
+
 A care coordinator opens Lumina before the daily team meeting. The platform surfaces the three patients with the most significant risk signal changes in the past 48 hours, with a summary of what changed and why. The team can prioritize their morning accordingly.
 
 ### 2. Between-Session Monitoring
+
 A patient completes a brief digital check-in on day 5 of a 10-day gap between sessions. Lumina detects a pattern consistent with worsening anhedonia and generates a flag for the assigned clinician — not an alarm, but a prompt to consider a brief outreach call.
 
 ### 3. Intake Triage for New Patients
+
 An admissions coordinator inputs structured assessment data from an intake form. Lumina returns a risk profile within seconds — not a diagnosis, but a structured prioritization recommendation with supporting evidence, helping the team allocate the next available specialist appropriately.
 
 ### 4. Care Gap Detection
+
 Lumina identifies that a high-risk patient has had no recorded care contact in 18 days — outside the agreed care plan cadence. A care coordinator is automatically notified to attempt re-engagement before the gap becomes a dropout.
 
 ### 5. Team Insights & Capacity Planning
+
 A clinical director reviews aggregate, de-identified team data to understand caseload distribution, risk concentration, and service utilization — enabling evidence-based resource allocation decisions.
 
 ---
@@ -210,6 +219,7 @@ lumina-care/
 > O código neste repositório é **ilustrativo** — representa como a arquitetura proposta seria estruturada, não um sistema funcional pronto para execução. Os comandos abaixo descrevem a implementação de referência.
 
 ### Stack de referência
+
 - Docker & Docker Compose
 - Node.js 18+ / Python 3.11+
 - PostgreSQL 15 + Redis 7
@@ -230,14 +240,14 @@ docker-compose up --build
 
 ### API proposta
 
-| Método | Endpoint | Função |
-|---|---|---|
-| `POST` | `/api/v1/triage/analyze` | Análise de risco a partir de dados do paciente |
-| `GET` | `/api/v1/triage/queue` | Fila priorizada de atenção clínica |
-| `GET` | `/api/v1/patients/{id}/insights` | Insights de IA para paciente específico |
-| `POST` | `/api/v1/patients/{id}/assessment` | Registro de nova avaliação clínica |
-| `GET` | `/api/v1/insights/team-summary` | Painel agregado de inteligência de equipe |
-| `POST` | `/api/v1/triage/{id}/override` | Override clínico / anotação profissional |
+| Método | Endpoint                           | Função                                         |
+| ------ | ---------------------------------- | ---------------------------------------------- |
+| `POST` | `/api/v1/triage/analyze`           | Análise de risco a partir de dados do paciente |
+| `GET`  | `/api/v1/triage/queue`             | Fila priorizada de atenção clínica             |
+| `GET`  | `/api/v1/patients/{id}/insights`   | Insights de IA para paciente específico        |
+| `POST` | `/api/v1/patients/{id}/assessment` | Registro de nova avaliação clínica             |
+| `GET`  | `/api/v1/insights/team-summary`    | Painel agregado de inteligência de equipe      |
+| `POST` | `/api/v1/triage/{id}/override`     | Override clínico / anotação profissional       |
 
 ---
 
@@ -245,13 +255,13 @@ docker-compose up --build
 
 See [`docs/ROADMAP.md`](docs/ROADMAP.md) for the full roadmap with milestones.
 
-| Phase | Focus | Status |
-|---|---|---|
-| **Phase 1 — Foundation** | Core triage engine, API, data models | 📐 Conceito |
-| **Phase 2 — Intelligence** | Risk scoring, trajectory analysis, LLM integration | 📋 Planned |
-| **Phase 3 — Interface** | Clinical dashboard, care coordinator view | 📋 Planned |
-| **Phase 4 — Integration** | EHR connectors, HL7 FHIR support | 📋 Planned |
-| **Phase 5 — Scale** | Multi-tenant, audit compliance, clinical validation | 📋 Planned |
+| Phase                      | Focus                                               | Status      |
+| -------------------------- | --------------------------------------------------- | ----------- |
+| **Phase 1 — Foundation**   | Core triage engine, API, data models                | 📐 Conceito |
+| **Phase 2 — Intelligence** | Risk scoring, trajectory analysis, LLM integration  | 📋 Planned  |
+| **Phase 3 — Interface**    | Clinical dashboard, care coordinator view           | 📋 Planned  |
+| **Phase 4 — Integration**  | EHR connectors, HL7 FHIR support                    | 📋 Planned  |
+| **Phase 5 — Scale**        | Multi-tenant, audit compliance, clinical validation | 📋 Planned  |
 
 ---
 
@@ -268,6 +278,7 @@ Lumina is a bet on that possibility.
 ## Colaboração
 
 Contribuições ao projeto de ideação são bem-vindas, especialmente de:
+
 - Profissionais de saúde mental dispostos a revisar a lógica clínica e os casos de uso
 - Engenheiros com experiência em dados de saúde e segurança em IA
 - Pesquisadores em psiquiatria computacional e NLP clínico
@@ -286,6 +297,6 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 **Lumina** — Built with rigor. Designed with empathy.
 
-*The best technology in mental health is invisible to the patient and indispensable to the clinician.*
+_The best technology in mental health is invisible to the patient and indispensable to the clinician._
 
 </div>

@@ -19,6 +19,7 @@ This principle is implemented technically: no endpoint or workflow allows an AI 
 A system that produces accurate outputs a clinician can't understand or explain is less valuable — and more dangerous — than a system that produces good-enough outputs with full transparency.
 
 Lumina chooses explainability over complexity. Every AI output includes:
+
 - The reasoning behind it
 - The evidence it references
 - The confidence level (with genuine uncertainty quantification)
@@ -39,6 +40,7 @@ Lumina's role when acute safety signals are detected: escalate to a human, immed
 Saying "we respect patient privacy" is easy. Building a system where patient privacy protection is architecturally enforced is harder — and required.
 
 Privacy in Lumina is implemented through:
+
 - Data minimization (collect only what is clinically necessary)
 - Encryption by default (at rest and in transit)
 - Role-based access (minimum necessary access per role)
@@ -58,6 +60,7 @@ Lumina treats bias monitoring as a non-optional technical requirement, not a sec
 ## 6. Clinical Boundaries Are Explicit and Enforced
 
 Lumina knows what it is not:
+
 - Not a diagnostic tool
 - Not a crisis intervention service
 - Not a therapy platform

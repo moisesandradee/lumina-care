@@ -14,11 +14,7 @@ export const metadata: Metadata = {
     "AI-native mental health intelligence platform for ethical triage, care journey support, and psychosocial risk analysis.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>

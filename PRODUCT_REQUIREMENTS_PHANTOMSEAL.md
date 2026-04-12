@@ -76,6 +76,7 @@ O produto deve ser exposto em três superfícies principais.
 ### 5.1 Seal Console
 
 Interface para:
+
 - enviar documento;
 - calcular hash;
 - mostrar prévia da prova;
@@ -85,6 +86,7 @@ Interface para:
 ### 5.2 Verify Console
 
 Interface para:
+
 - carregar documento e JSON de evidência;
 - revalidar hash;
 - revalidar assinatura;
@@ -94,6 +96,7 @@ Interface para:
 ### 5.3 Evidence Registry
 
 Registro consultável de evidências geradas, com filtros por:
+
 - hash;
 - tx_hash;
 - data;
@@ -146,30 +149,39 @@ Em ambiente de saúde, qualquer associação com paciente ou caso deve obedecer 
 ## 8. Requisitos Funcionais
 
 ### RF-01 — Selagem de documento
+
 O sistema deve aceitar um arquivo e calcular seu SHA3-256.
 
 ### RF-02 — Assinatura criptográfica
+
 O sistema deve gerar assinatura ECDSA da mensagem `PHANTOM-SEAL::<hash>`.
 
 ### RF-03 — Geração de payload QTST
+
 O sistema deve construir payload com prefixo QTST e hash do documento.
 
 ### RF-04 — Operação em dry-run
+
 O sistema deve permitir gerar evidência sem envio on-chain.
 
 ### RF-05 — Ancoragem em Sepolia
+
 O sistema deve permitir envio opcional de transação para Sepolia.
 
 ### RF-06 — Persistência da evidência
+
 O sistema deve gerar e armazenar JSON de evidência.
 
 ### RF-07 — Verificação independente
+
 O sistema deve oferecer fluxo para revalidar hash, assinatura e ancoragem.
 
 ### RF-08 — Registro interno
+
 O sistema deve indexar as evidências geradas para posterior consulta.
 
 ### RF-09 — Exportação de pacote probatório
+
 O sistema deve permitir exportar documento + evidência + dados de verificação.
 
 ---
@@ -177,21 +189,27 @@ O sistema deve permitir exportar documento + evidência + dados de verificação
 ## 9. Requisitos Não Funcionais
 
 ### RNF-01 — Segurança
+
 Chaves privadas não devem ser expostas em interface de usuário.
 
 ### RNF-02 — Auditabilidade
+
 Todo evento relevante deve gerar registro de auditoria.
 
 ### RNF-03 — Integridade de evidência
+
 A evidência deve poder ser revalidada independentemente.
 
 ### RNF-04 — Segregação de funções
+
 O produto deve suportar separação entre quem sela, quem verifica e quem audita.
 
 ### RNF-05 — Retenção
+
 O produto deve prever retenção configurável de evidências.
 
 ### RNF-06 — Escalabilidade operacional
+
 O módulo deve operar como serviço interno do Lumina, não apenas como script manual.
 
 ---
@@ -233,6 +251,7 @@ O MVP real do PhantomSeal como produto deve incluir:
 ## 12. Roadmap de Produto
 
 ### Curto prazo
+
 - integrar signer/verify ao backend do Lumina;
 - registrar evidências em banco;
 - criar tela de consulta;
@@ -240,12 +259,14 @@ O MVP real do PhantomSeal como produto deve incluir:
 - consolidar documentação.
 
 ### Médio prazo
+
 - workflow institucional de aprovação;
 - integração com documentos clínicos e SST;
 - relatórios de verificação;
 - trilha de diligência organizacional.
 
 ### Longo prazo
+
 - chaves em KMS/HSM;
 - assinatura híbrida ECDSA + pós-quântica;
 - ambiente de produção;

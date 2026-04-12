@@ -2,14 +2,14 @@
 
 ## What Lumina Can Do
 
-| Capability | Description | Clinical status |
-|---|---|---|
-| Risk signal detection | Identify psychosocial risk patterns from structured assessment data | Advisory |
-| Care gap detection | Flag patients outside care plan contact frequency | Informational |
-| Priority queue generation | Order patients by computed risk for team review | Advisory |
-| Session preparation briefing | Summarize longitudinal data for pre-session review | Advisory |
-| Team analytics | Aggregate, de-identified service intelligence | Informational |
-| Trend analysis | Longitudinal trajectory of clinical indicators | Advisory |
+| Capability                   | Description                                                         | Clinical status |
+| ---------------------------- | ------------------------------------------------------------------- | --------------- |
+| Risk signal detection        | Identify psychosocial risk patterns from structured assessment data | Advisory        |
+| Care gap detection           | Flag patients outside care plan contact frequency                   | Informational   |
+| Priority queue generation    | Order patients by computed risk for team review                     | Advisory        |
+| Session preparation briefing | Summarize longitudinal data for pre-session review                  | Advisory        |
+| Team analytics               | Aggregate, de-identified service intelligence                       | Informational   |
+| Trend analysis               | Longitudinal trajectory of clinical indicators                      | Advisory        |
 
 ---
 
@@ -17,16 +17,16 @@
 
 These capabilities are explicitly excluded — not by technical limitation, but by deliberate ethical and clinical design:
 
-| Excluded capability | Why excluded |
-|---|---|
-| Diagnose mental health conditions | Requires licensed clinical training and therapeutic relationship |
-| Prescribe or recommend specific treatments | Clinical decision requiring licensed authority |
-| Respond to or manage acute crisis | Immediate human clinical response required; AI intervention contraindicated |
-| Generate therapy content for patients | Different safety profile; out of scope for clinical team tool |
-| Make autonomous care decisions | Human authority is non-delegable in clinical settings |
-| Replace any component of the therapeutic relationship | Ethically inviolable |
-| Score insurance risk | Ethical conflict; risk of discriminatory application |
-| Generate clinical documentation autonomously | Accuracy and accountability are clinician responsibilities |
+| Excluded capability                                   | Why excluded                                                                |
+| ----------------------------------------------------- | --------------------------------------------------------------------------- |
+| Diagnose mental health conditions                     | Requires licensed clinical training and therapeutic relationship            |
+| Prescribe or recommend specific treatments            | Clinical decision requiring licensed authority                              |
+| Respond to or manage acute crisis                     | Immediate human clinical response required; AI intervention contraindicated |
+| Generate therapy content for patients                 | Different safety profile; out of scope for clinical team tool               |
+| Make autonomous care decisions                        | Human authority is non-delegable in clinical settings                       |
+| Replace any component of the therapeutic relationship | Ethically inviolable                                                        |
+| Score insurance risk                                  | Ethical conflict; risk of discriminatory application                        |
+| Generate clinical documentation autonomously          | Accuracy and accountability are clinician responsibilities                  |
 
 ---
 
@@ -40,6 +40,7 @@ When Lumina detects signals consistent with any of the following, escalation to 
 - Acute psychiatric crisis indicators
 
 In these scenarios:
+
 - AI does not attempt to respond or provide guidance
 - Human clinician is notified with urgency indicator
 - All other Lumina outputs for that patient are suppressed until clinician reviews

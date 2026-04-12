@@ -10,15 +10,15 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 
 ## 📈 Métricas de Sucesso
 
-| Métrica | Target | Status |
-|---------|--------|--------|
-| **Type Coverage** | 100% TypeScript strict | ✅ Implementado |
-| **Lint Compliance** | 0 warnings | ✅ Configurado |
-| **Test Coverage** | Frontend 70%, Backend 80% | ⏳ Testes pendentes |
-| **Security Scanning** | Vulnerabilidades críticas = 0 | ✅ Automático |
-| **CI/CD Success Rate** | ≥99% builds pass | ✅ Em produção |
-| **Code Review SLA** | ≤24h per PR | 📋 Documentado |
-| **Documentation** | 100% APIs documentadas | ⏳ Em progresso |
+| Métrica                | Target                        | Status              |
+| ---------------------- | ----------------------------- | ------------------- |
+| **Type Coverage**      | 100% TypeScript strict        | ✅ Implementado     |
+| **Lint Compliance**    | 0 warnings                    | ✅ Configurado      |
+| **Test Coverage**      | Frontend 70%, Backend 80%     | ⏳ Testes pendentes |
+| **Security Scanning**  | Vulnerabilidades críticas = 0 | ✅ Automático       |
+| **CI/CD Success Rate** | ≥99% builds pass              | ✅ Em produção      |
+| **Code Review SLA**    | ≤24h per PR                   | 📋 Documentado      |
+| **Documentation**      | 100% APIs documentadas        | ⏳ Em progresso     |
 
 ---
 
@@ -27,12 +27,14 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 ### 1.1 Governança GitHub ✅
 
 **Implementado:**
+
 - ✅ `LICENSE` — MIT com disclaimer clínico
 - ✅ `CONTRIBUTING.md` — Guia completo de contribuição
 - ✅ `CODE_OF_CONDUCT.md` — Padrões comunitários
 - ✅ `SECURITY.md` — Política de divulgação de vulnerabilidades
 
 **Impacto:**
+
 - Define expectativas claras para contribuidores
 - Protege projeto com conformidade legal
 - Estabelece política de segurança transparente
@@ -41,12 +43,14 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 ### 1.2 Configurações de Tooling ✅
 
 **Frontend (TypeScript/Next.js):**
+
 - ✅ `.eslintrc.json` — Strict mode ESLint
 - ✅ `.prettierrc.json` — Formatter configurado
 - ✅ `jest.config.js` — Test runner
 - ✅ `jest.setup.js` — Test environment
 
 **Backend (Python/FastAPI):**
+
 - ✅ `pyproject.toml` — Python tooling centralizado
   - pytest com cobertura ≥80%
   - mypy para type checking strict
@@ -55,10 +59,12 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
   - bandit para segurança
 
 **Compartilhado:**
+
 - ✅ `.prettierignore` — Formatter exclusions
 - ✅ `lint-staged.config.js` — Pre-commit filtering
 
 **Impacto:**
+
 - Código formatado consistentemente
 - Qualidade garantida automaticamente
 - Type safety em 100% do código
@@ -67,6 +73,7 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 ### 1.3 Pre-commit Hooks ✅
 
 **Husky Hooks:**
+
 - ✅ `.husky/pre-commit` — Validação automática antes de commit
   - Type checking
   - Linting
@@ -78,6 +85,7 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
   - Types: feat, fix, docs, test, chore, refactor, perf, security
 
 **package.json Scripts:**
+
 ```json
 {
   "lint:fix": "Auto-fix linting issues",
@@ -91,6 +99,7 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 ```
 
 **Impacto:**
+
 - Nenhum código quebrado chega ao repositório
 - Histórico de commits limpo e consistente
 - Validação é impossível contornar
@@ -99,6 +108,7 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 ### 1.4 GitHub Issue & PR Templates ✅
 
 **Templates Criados:**
+
 - ✅ `.github/ISSUE_TEMPLATE/bug_report.md` — Padronizado
 - ✅ `.github/ISSUE_TEMPLATE/feature_request.md` — Structured
 - ✅ `.github/ISSUE_TEMPLATE/security_vulnerability.md` — Confidential
@@ -106,6 +116,7 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 - ✅ `.github/pull_request_template.md` — Comprehensive
 
 **Impacto:**
+
 - Issues bem estruturadas economizam tempo
 - PRs documentadas facilitam review
 - Informação consistente em todo o repo
@@ -120,31 +131,32 @@ Transformar o repositório Lumina de um "projeto conceitual" para um repositóri
 **Workflow:** `.github/workflows/frontend-tests.yml`
 
 ```yaml
-Jobs:
-  ✅ Type Check & Lint (15 min)
-     - TypeScript strict mode
-     - ESLint validation
-  
+Jobs: ✅ Type Check & Lint (15 min)
+  - TypeScript strict mode
+  - ESLint validation
+
   ✅ Unit Tests (20 min)
-     - Jest test suite
-     - Coverage reporting to Codecov
-     - PR comment with coverage delta
-  
+  - Jest test suite
+  - Coverage reporting to Codecov
+  - PR comment with coverage delta
+
   ✅ Build Check (25 min)
-     - Next.js production build
-     - Build artifact caching
-  
+  - Next.js production build
+  - Build artifact caching
+
   ✅ Security Scan (10 min)
-     - npm audit
-     - Snyk analysis (if configured)
+  - npm audit
+  - Snyk analysis (if configured)
 ```
 
 **Triggers:**
+
 - Push to `master`, `main`, `develop`
 - PR to `master`, `main`, `develop`
 - Path filtering: `src/web/**`, `package*.json`
 
 **Outputs:**
+
 - ✅ Test reports
 - ✅ Coverage reports to Codecov
 - ✅ Build artifacts cached
@@ -161,13 +173,13 @@ Jobs:
      - Black: Formatting
      - MyPy: Type analysis
      - Bandit: Security
-  
+
   ✅ Unit Tests (25 min)
      - pytest with coverage ≥80%
      - PostgreSQL 15 service
      - Redis 7 service
      - Codecov upload
-  
+
   ✅ Integration Tests (30 min)
      - End-to-end API testing
      - Database interactions
@@ -175,11 +187,13 @@ Jobs:
 ```
 
 **Triggers:**
+
 - Push to `master`, `main`, `develop`
 - PR to `master`, `main`, `develop`
 - Path filtering: `src/api/**`, `pyproject.toml`
 
 **Services:**
+
 - PostgreSQL 15 (health checks)
 - Redis 7 (health checks)
 
@@ -225,20 +239,21 @@ Jobs:
 
 ### 3.1 Documentação Técnica Planejada
 
-| Documento | Status | Escopo |
-|-----------|--------|--------|
-| `SETUP.md` | 🔄 Planejado | Setup local passo-a-passo |
-| `DEVELOPMENT.md` | 🔄 Planejado | Guia de desenvolvimento |
-| `TESTING.md` | 🔄 Planejado | Estratégia de testes |
-| `API.md` | 🔄 Planejado | Documentação de endpoints |
-| `DATABASE.md` | 🔄 Planejado | Schema, migrations, seeds |
-| `DEPLOYMENT.md` | 🔄 Planejado | Produção, scaling, backup |
-| `ARCHITECTURE.md` | 🔄 Planejado | Design decisions |
+| Documento            | Status       | Escopo                    |
+| -------------------- | ------------ | ------------------------- |
+| `SETUP.md`           | 🔄 Planejado | Setup local passo-a-passo |
+| `DEVELOPMENT.md`     | 🔄 Planejado | Guia de desenvolvimento   |
+| `TESTING.md`         | 🔄 Planejado | Estratégia de testes      |
+| `API.md`             | 🔄 Planejado | Documentação de endpoints |
+| `DATABASE.md`        | 🔄 Planejado | Schema, migrations, seeds |
+| `DEPLOYMENT.md`      | 🔄 Planejado | Produção, scaling, backup |
+| `ARCHITECTURE.md`    | 🔄 Planejado | Design decisions          |
 | `TROUBLESHOOTING.md` | 🔄 Planejado | Common issues & solutions |
 
 ### 3.2 Branch Protection Rules (Planejado)
 
 **Configurações Recomendadas:**
+
 ```
 Master branch:
   ✓ Require pull request reviews (≥2)
@@ -304,6 +319,7 @@ ci: description                  → CI/CD changes
 ```
 
 **Exemplo:**
+
 ```
 feat(triage): implement risk score normalization for C-SSRS
 
@@ -331,6 +347,7 @@ chore/task-description           → Maintenance
 ### Code Review Standards ✅
 
 **Required for Merge:**
+
 1. ✅ All automated checks pass
 2. ✅ Minimum 1 approval
 3. ✅ Branch up-to-date with base
@@ -338,6 +355,7 @@ chore/task-description           → Maintenance
 5. ✅ Conventional Commits format
 
 **Review Focus:**
+
 - Architecture alignment
 - Code quality & readability
 - Test coverage adequacy
@@ -398,6 +416,7 @@ chore/task-description           → Maintenance
 ## 📊 TRANSFORMAÇÃO ANTES/DEPOIS
 
 ### ANTES (Inicial)
+
 ```
 ❌ Sem governança documentada
 ❌ Sem CI/CD automático
@@ -410,6 +429,7 @@ chore/task-description           → Maintenance
 ```
 
 ### DEPOIS (Pós-Implementação)
+
 ```
 ✅ Governança clara (LICENSE, CODE_OF_CONDUCT, SECURITY)
 ✅ CI/CD automático (Frontend + Backend)
@@ -426,24 +446,31 @@ chore/task-description           → Maintenance
 ## 🎯 PRINCÍPIOS DE DESIGN
 
 ### 1. **Automação Total**
+
 Toda validação é automática. Humanos review, máquinas validam.
 
 ### 2. **Fail Fast**
+
 Feedback imediato em minutos, não horas.
 
 ### 3. **Segurança by Default**
+
 Vulnerabilidades são bloqueadas antes de merge.
 
 ### 4. **Documentação Como Código**
+
 Docs vivem no repo, versionadas com código.
 
 ### 5. **Transparência Radical**
+
 Tudo é rastreável, auditável, reproducível.
 
 ### 6. **Escalabilidade**
+
 Processos trabalham para 1 ou 100 contributors igualmente.
 
 ### 7. **Diversidade de Contribuidores**
+
 Clínicos, engenheiros, pesquisadores — padrões claros para todos.
 
 ---
@@ -475,27 +502,32 @@ Clínicos, engenheiros, pesquisadores — padrões claros para todos.
 
 ### Por que isso importa para Lumina?
 
-**1. Confiança Clínica** 
+**1. Confiança Clínica**
+
 - Dados de pacientes exigem máxima confiabilidade
 - Automação remove erro humano
 - Auditoria completa = conformidade regulatória
 
 **2. Colaboração Eficiente**
+
 - Padrões claros = tempo de onboarding reduzido
 - PRs são auto-explicatórias com templates
 - Code review é objetiva, não subjetiva
 
 **3. Velocidade de Entrega**
+
 - Testes automáticos = merge em horas, não dias
 - CI/CD = deploy seguro em minutos
 - Documentação = menos perguntas no Slack
 
 **4. Segurança**
+
 - OWASP Top 10 prevenção automática
 - Vulnerabilidades de dependências = 0 dia
 - Secrets nunca commited
 
 **5. Reputação**
+
 - Repositório profissional = confiança de stakeholders
 - Transparência = credibilidade
 - Padrões = legitimidade

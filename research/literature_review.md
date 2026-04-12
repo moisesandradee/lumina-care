@@ -13,6 +13,7 @@ This document summarizes the clinical evidence base informing Lumina's risk scor
 **Primary reference**: Kroenke K, Spitzer RL, Williams JB. "The PHQ-9: validity of a brief depression severity measure." J Gen Intern Med. 2001;16(9):606-613.
 
 **Severity thresholds used in Lumina**:
+
 - 1–4: Minimal depression symptoms
 - 5–9: Mild depression symptoms
 - 10–14: Moderate depression symptoms
@@ -28,6 +29,7 @@ This document summarizes the clinical evidence base informing Lumina's risk scor
 **Primary reference**: Spitzer RL, Kroenke K, Williams JB, Löwe B. "A brief measure for assessing generalized anxiety disorder." Arch Intern Med. 2006;166(10):1092-1097.
 
 **Severity thresholds used in Lumina**:
+
 - 0–4: Minimal anxiety symptoms
 - 5–9: Mild anxiety symptoms
 - 10–14: Moderate anxiety symptoms

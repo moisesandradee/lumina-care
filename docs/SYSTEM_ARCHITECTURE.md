@@ -68,12 +68,14 @@ Before describing the architecture, the principles that shaped it:
 ### 1. API Layer (FastAPI)
 
 **Responsibilities:**
+
 - Request validation and authentication
 - Route dispatch to service layer
 - Response serialization and error handling
 - Rate limiting per clinical role
 
 **Key design decisions:**
+
 - All endpoints return structured responses with `confidence`, `evidence_refs`, and `override_allowed` fields
 - Async by default — all I/O operations are non-blocking
 - OpenAPI schema auto-generated for developer and clinical governance documentation
@@ -81,12 +83,14 @@ Before describing the architecture, the principles that shaped it:
 ### 2. AI Service (`src/api/services/ai_service.py`)
 
 **Responsibilities:**
+
 - Constructs structured prompts from patient data using clinical prompt templates
 - Calls Anthropic Claude API with appropriate system context
 - Parses and validates LLM responses against expected clinical output schemas
 - Logs all AI interactions to the audit store
 
 **Critical safety constraints:**
+
 - Raw patient PII is **never** included in prompts — only de-identified clinical signals
 - Prompts include explicit safety instructions (see `prompts/`)
 - All AI outputs are tagged `source: ai, requires_human_review: true`
@@ -94,12 +98,14 @@ Before describing the architecture, the principles that shaped it:
 ### 3. Risk Analysis Service (`src/api/services/risk_analysis.py`)
 
 **Responsibilities:**
+
 - Computes multi-dimensional psychosocial risk scores from structured assessment data
 - Applies validated clinical frameworks (PHQ-9, GAD-7, C-SSRS)
 - Generates longitudinal trajectory models
 - Produces risk priority rankings for care queues
 
 **Risk dimensions tracked:**
+
 - Acute safety risk (suicidal/self-harm ideation)
 - Functional impairment severity
 - Social support deficit
@@ -130,12 +136,14 @@ care_interactions (id, patient_id, type, occurred_at, clinician_id, notes_hash)
 ### 5. Frontend (Next.js 14)
 
 **Pages:**
+
 - `/dashboard` — Clinical team overview, priority queue, risk heatmap
 - `/patients/[id]` — Individual patient intelligence view
 - `/triage` — Intake triage workflow
 - `/insights` — Team-level analytics
 
 **Key components:**
+
 - `RiskQueue` — Prioritized patient list with risk indicators
 - `PatientTimeline` — Longitudinal view of patient trajectory
 - `AssessmentForm` — Structured intake and follow-up assessments
@@ -145,15 +153,15 @@ care_interactions (id, patient_id, type, occurred_at, clinician_id, notes_hash)
 
 ## Security Architecture
 
-| Layer | Control |
-|---|---|
-| **Transport** | TLS 1.3 everywhere |
-| **Authentication** | JWT with short expiry + refresh token rotation |
-| **Authorization** | Role-based (clinician / coordinator / director / admin) |
-| **Data at rest** | AES-256 encryption for all patient-linked data |
-| **AI boundary** | No PII crosses to external AI provider — prompt templates use anonymized signals only |
-| **Audit** | Immutable audit log for all AI outputs and clinical overrides |
-| **Access logging** | Every patient record access is logged with actor, timestamp, and context |
+| Layer              | Control                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| **Transport**      | TLS 1.3 everywhere                                                                    |
+| **Authentication** | JWT with short expiry + refresh token rotation                                        |
+| **Authorization**  | Role-based (clinician / coordinator / director / admin)                               |
+| **Data at rest**   | AES-256 encryption for all patient-linked data                                        |
+| **AI boundary**    | No PII crosses to external AI provider — prompt templates use anonymized signals only |
+| **Audit**          | Immutable audit log for all AI outputs and clinical overrides                         |
+| **Access logging** | Every patient record access is logged with actor, timestamp, and context              |
 
 ---
 

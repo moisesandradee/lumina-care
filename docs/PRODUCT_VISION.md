@@ -26,6 +26,7 @@ This is not a utopia. It is a reasonable, achievable upgrade to how mental healt
 Lumina is a **clinical intelligence layer** that sits between the raw data of mental health care and the clinical decisions that data should inform.
 
 It is:
+
 - **An intelligence amplifier** for care teams — not a replacement
 - **A continuity engine** — bridging the gaps between appointments where most deterioration occurs
 - **A triage prioritization system** — helping teams direct attention where it is most needed
@@ -61,13 +62,13 @@ These boundaries are not limitations. They are the source of Lumina's clinical c
 
 ## Strategic Positioning
 
-| Dimension | Position |
-|---|---|
-| **Primary user** | Mental health clinicians and care coordinators |
-| **Setting** | Outpatient, digital health, integrated care services |
-| **Core value** | Earlier risk detection, better care continuity |
-| **Differentiation** | Ethics-first AI with clinical-grade explainability |
-| **Business model** | B2B SaaS — per-seat or per-patient volume licensing |
+| Dimension           | Position                                             |
+| ------------------- | ---------------------------------------------------- |
+| **Primary user**    | Mental health clinicians and care coordinators       |
+| **Setting**         | Outpatient, digital health, integrated care services |
+| **Core value**      | Earlier risk detection, better care continuity       |
+| **Differentiation** | Ethics-first AI with clinical-grade explainability   |
+| **Business model**  | B2B SaaS — per-seat or per-patient volume licensing  |
 
 ---
 
