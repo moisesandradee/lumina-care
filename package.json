@@ -12,10 +12,10 @@
     "typescript"
   ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "dev": "cd src/web && next dev",
+    "build": "cd src/web && next build",
+    "start": "cd src/web && next start",
+    "lint": "cd src/web && next lint",
     "type-check": "tsc --noEmit",
     "db:migrate": "ts-node src/lib/db/migrate.ts",
     "db:seed": "ts-node src/lib/db/seed.ts",
