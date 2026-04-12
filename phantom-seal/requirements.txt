@@ -1,4 +1,4 @@
-cryptography
-oqs-python
-web3
-python-dotenv
+cryptography>=42.0
+oqs-python>=0.10.0
+web3>=6.0
+python-dotenv>=1.0
