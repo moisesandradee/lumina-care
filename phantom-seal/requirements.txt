@@ -13,6 +13,7 @@
 dilithium-py>=0.0.5
 fpdf2>=2.7
 web3>=6.0
+eth-account>=0.11.3
 python-dotenv>=1.0
 
 # Opcional — substitui dilithium-py por backend nativo C (mais rápido):
