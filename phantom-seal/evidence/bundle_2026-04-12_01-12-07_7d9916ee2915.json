@@ -1,0 +1,13 @@
+{
+  "filename": "sample_aso.pdf",
+  "file_size_bytes": 0,
+  "sha3_256": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+  "algorithm": "HMAC-SHA3-256 (stub — liboqs indisponível, somente dry-run)",
+  "public_key": "28a91d73b2758a00423408fb87d325cd0683b22d284ec4b0f1f46fa56cc0e2a1",
+  "signature": "ab01692dcfb684b658fc6606ab077bb10458eb16c77b444a742933e8f5972da9",
+  "timestamp_utc": "2026-04-12 01:12:07",
+  "tx_hash": "0x7d9916ee2915a1c12caf03b887a1dd29ed82fe48b65a599a1eb25fbb44932dfd",
+  "block_number": 12956327,
+  "network": "Sepolia [DRY-RUN — não enviado à rede]",
+  "dry_run": true
+}

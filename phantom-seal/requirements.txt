@@ -1,4 +1,19 @@
-cryptography>=42.0
-oqs-python>=0.10.0
+# Q-Trust phantom-seal — dependências
+#
+# Instalação:
+#   pip install -r requirements.txt
+#
+# PQC (ordem de preferência — instale apenas um):
+#   dilithium-py  → Dilithium3 puro-Python, sem deps C (recomendado para início)
+#   oqs-python    → liboqs nativo, mais rápido, requer liboqs compilado
+#
+# PDF de teste:
+#   fpdf2         → geração do sample_aso.pdf
+
+dilithium-py>=0.0.5
+fpdf2>=2.7
 web3>=6.0
 python-dotenv>=1.0
+
+# Opcional — substitui dilithium-py por backend nativo C (mais rápido):
+# oqs-python>=0.10.0
