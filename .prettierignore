@@ -1,0 +1,17 @@
+node_modules
+.next
+build
+dist
+.venv
+venv
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.log
+.git
+.github
+.husky
+phantom-seal/evidence
+coverage
+.nyc_output

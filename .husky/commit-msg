@@ -1,0 +1,36 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Validate commit message format
+# Uses Conventional Commits: feat:, fix:, docs:, test:, chore:, etc.
+
+commit_msg=$(cat "$1")
+
+# Pattern: type(scope): subject
+#   OR: type: subject
+pattern='^(feat|fix|docs|test|chore|refactor|perf|security|ci|revert)(\(.+\))?: .{1,}$'
+
+if ! echo "$commit_msg" | grep -Eq "$pattern"; then
+  echo "❌ Invalid commit message format!"
+  echo ""
+  echo "Expected format: <type>(<scope>): <subject>"
+  echo ""
+  echo "Types allowed:"
+  echo "  feat:     A new feature"
+  echo "  fix:      A bug fix"
+  echo "  docs:     Documentation changes"
+  echo "  test:     Adding or updating tests"
+  echo "  chore:    Maintenance tasks, dependencies"
+  echo "  refactor: Code refactoring"
+  echo "  perf:     Performance improvements"
+  echo "  security: Security-related fixes"
+  echo "  ci:       CI/CD changes"
+  echo "  revert:   Reverting a previous commit"
+  echo ""
+  echo "Examples:"
+  echo "  feat(triage): add risk score normalization"
+  echo "  fix(dashboard): resolve null pointer in chart rendering"
+  echo "  docs: update API documentation"
+  echo ""
+  exit 1
+fi

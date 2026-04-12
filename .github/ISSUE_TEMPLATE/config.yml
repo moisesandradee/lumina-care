@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "🤔 Question or Discussion"
+    url: "https://github.com/moisesandradee/lumina-care/discussions"
+    about: "Have a question? Start a discussion!"
+  - name: "📖 Documentation"
+    url: "https://github.com/moisesandradee/lumina-care/tree/master/docs"
+    about: "Check the documentation first"
+  - name: "🔐 Security Vulnerability"
+    url: "https://github.com/moisesandradee/lumina-care/blob/master/SECURITY.md"
+    about: "Please report privately according to SECURITY.md"

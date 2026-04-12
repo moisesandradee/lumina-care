@@ -1,0 +1,23 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run linting and type checking on staged files
+echo "🔍 Running pre-commit checks..."
+
+# Check for secrets
+echo "🔐 Checking for secrets..."
+npm run security:check || exit 1
+
+# Type checking
+echo "📝 Type checking..."
+npm run type-check || exit 1
+
+# Linting
+echo "🧹 Linting..."
+npm run lint || exit 1
+
+# Format (would need prettier installed)
+echo "✨ Checking code format..."
+npm run format:check || true  # Don't fail if prettier not set up yet
+
+echo "✅ Pre-commit checks passed!"

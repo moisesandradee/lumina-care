@@ -16,11 +16,20 @@
     "build": "cd src/web && next build",
     "start": "cd src/web && next start",
     "lint": "cd src/web && next lint",
+    "lint:fix": "eslint src/web --fix && prettier --write src/web",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
-    "db:migrate": "ts-node src/lib/db/migrate.ts",
-    "db:seed": "ts-node src/lib/db/seed.ts",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "jest --testPathPattern=e2e",
+    "validate": "npm run type-check && npm run lint && npm run test:coverage",
+    "security:check": "npm audit --audit-level=moderate",
+    "security:fix": "npm audit fix",
+    "prepare": "husky install",
+    "db:migrate": "ts-node src/lib/db/migrate.ts",
+    "db:seed": "ts-node src/lib/db/seed.ts"
   },
   "dependencies": {
     "next": "14.2.3",
@@ -57,6 +66,11 @@
     "ts-node": "^10.9.2",
     "ts-jest": "^29.1.4",
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "prettier": "^3.1.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0"
   }
 }
