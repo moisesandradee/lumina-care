@@ -19,13 +19,13 @@ import json
 import logging
 import os
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 import anthropic
 from pydantic import ValidationError
 
-from models.triage import AISignalAnalysis, RiskLevel
+from models.triage import AISignalAnalysis
 
 logger = logging.getLogger("lumina.ai_service")
 
@@ -183,7 +183,7 @@ IMPORTANT:
             evidence_refs=parsed.get("evidence_refs", []),
             escalation_required=bool(parsed["escalation_required"]),
             model_version=CLINICAL_MODEL,
-            generated_at=datetime.utcnow(),
+            generated_at=datetime.now(timezone.utc),
         )
 
     def _log_ai_interaction(
@@ -206,6 +206,6 @@ IMPORTANT:
                 "clinician_id": clinician_id,
                 "model": model,
                 "output_summary": output_summary,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             },
         )

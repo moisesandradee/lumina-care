@@ -9,7 +9,7 @@ Endpoints for AI-generated clinical insights and team-level analytics.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -28,7 +28,7 @@ async def get_team_summary(care_team_id: str) -> dict:
     """Aggregate team intelligence for clinical director view."""
     return {
         "care_team_id": care_team_id,
-        "generated_at": datetime.utcnow().isoformat(),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "active_patients": 38,
         "risk_distribution": {
             "low": 21,
@@ -74,7 +74,7 @@ async def get_session_prep(patient_id: str, clinician_id: str) -> dict:
     return {
         "patient_id": patient_id,
         "generated_for": clinician_id,
-        "generated_at": datetime.utcnow().isoformat(),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "since_last_session": {
             "days_elapsed": 14,
             "new_assessments": 1,

@@ -18,8 +18,6 @@ Clinical frameworks used:
 
 from __future__ import annotations
 
-import uuid
-from datetime import datetime
 from typing import Optional
 
 from models.triage import (
@@ -28,7 +26,6 @@ from models.triage import (
     RiskLevel,
     TrendDirection,
     RecommendedAction,
-    PriorityQueueEntry,
 )
 
 

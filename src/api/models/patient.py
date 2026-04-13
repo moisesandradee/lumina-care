@@ -9,7 +9,7 @@ Internal patient representation — no PII stored or transmitted in these models
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field
@@ -49,8 +49,8 @@ class Patient(BaseModel):
     care_plan_contact_frequency_days: int = Field(
         14, description="Target number of days between care contacts"
     )
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class CareInteraction(BaseModel):
@@ -91,4 +91,4 @@ class AssessmentRecord(BaseModel):
     severity_label: Optional[str] = None
     completed_at: datetime
     clinician_id: Optional[str] = None
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

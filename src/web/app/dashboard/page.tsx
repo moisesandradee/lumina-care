@@ -134,7 +134,7 @@ export default function DashboardPage() {
                 Ordered by risk score · Updated 4 minutes ago
               </p>
             </div>
-            <button className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">
+            <button aria-label="Refresh priority queue" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">
               Refresh
             </button>
           </div>
@@ -226,7 +226,7 @@ export default function DashboardPage() {
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
                   <span className="text-sm text-slate-400 w-20">{item.label}</span>
-                  <div className="flex-1 bg-slate-800 rounded-full h-2">
+                  <div className="flex-1 bg-slate-800 rounded-full h-2" role="progressbar" aria-label={`${item.label} risk level`} aria-valuenow={item.count} aria-valuemin={0} aria-valuemax={item.total}>
                     <div
                       className={`${item.color} h-2 rounded-full`}
                       style={{ width: `${(item.count / item.total) * 100}%` }}

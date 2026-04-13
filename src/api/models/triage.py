@@ -9,7 +9,7 @@ Pydantic models for triage request/response schemas.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field, field_validator
@@ -139,7 +139,7 @@ class AISignalAnalysis(BaseModel):
         )
     )
     model_version: str = Field(..., description="AI model version used")
-    generated_at: datetime = Field(default_factory=datetime.utcnow)
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class TriageResponse(BaseModel):
@@ -158,7 +158,7 @@ class TriageResponse(BaseModel):
         description="Numeric priority score for queue ordering (higher = higher priority)"
     )
     ai_analysis: Optional[AISignalAnalysis] = None
-    computed_at: datetime = Field(default_factory=datetime.utcnow)
+    computed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     requires_override_review: bool = Field(
         False, description="Whether this triage was automatically flagged for mandatory clinician review"
     )
@@ -187,5 +187,5 @@ class PriorityQueueResponse(BaseModel):
     high_urgency_count: int = Field(
         ..., description="Number of entries at HIGH or ACUTE risk level"
     )
-    generated_at: datetime = Field(default_factory=datetime.utcnow)
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     care_team_id: str

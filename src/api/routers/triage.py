@@ -10,9 +10,9 @@ Endpoints for psychosocial risk triage and patient priority queue.
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, Header
 from typing import Optional
 
 from models.triage import (
@@ -91,7 +91,7 @@ async def analyze_patient_risk(
         recommended_action=recommended_action,
         priority_score=priority_score,
         ai_analysis=ai_analysis,
-        computed_at=datetime.utcnow(),
+        computed_at=datetime.now(timezone.utc),
         requires_override_review=requires_override_review,
     )
 
@@ -127,7 +127,7 @@ async def get_priority_queue(
             primary_signal="PHQ-9 score increased 8 points since last assessment",
             days_since_last_contact=12,
             recommended_action=RecommendedAction.PRIORITY_CONTACT,
-            computed_at=datetime.utcnow(),
+            computed_at=datetime.now(timezone.utc),
         ),
         PriorityQueueEntry(
             patient_id="pat_007",
@@ -137,7 +137,7 @@ async def get_priority_queue(
             primary_signal="Care gap: 19 days since last contact",
             days_since_last_contact=19,
             recommended_action=RecommendedAction.ENHANCED_MONITORING,
-            computed_at=datetime.utcnow(),
+            computed_at=datetime.now(timezone.utc),
         ),
     ]
 
@@ -158,7 +158,7 @@ async def get_priority_queue(
         entries=stub_entries[:limit],
         total_count=len(stub_entries),
         high_urgency_count=high_urgency,
-        generated_at=datetime.utcnow(),
+        generated_at=datetime.now(timezone.utc),
         care_team_id=care_team_id,
     )
 
@@ -189,7 +189,7 @@ async def submit_override(
         "new_risk_level": new_risk_level,
         "overridden_by": clinician_id,
         "rationale": rationale,
-        "logged_at": datetime.utcnow().isoformat(),
+        "logged_at": datetime.now(timezone.utc).isoformat(),
         "message": "Override applied and logged. Clinical judgment recorded.",
     }
 

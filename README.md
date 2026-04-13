@@ -158,7 +158,7 @@ This conceptual platform is designed with the understanding that AI in mental he
 - **Lumina operates under clinician authority.** The platform provides intelligence; the clinician retains all authority over care.
 - **Privacy is not a feature — it is a foundation.** All patient data is encrypted, access-controlled, and fully auditable.
 
-Full ethical framework: [`ethics/ETHICS_AND_SAFETY.md`](ethics/ETHICS_AND_SAFETY.md)
+Full ethical framework: [`docs/ETHICS_AND_SAFETY.md`](docs/ETHICS_AND_SAFETY.md)
 
 ---
 
@@ -280,7 +280,7 @@ Issues e discussões são o canal preferido para contribuições conceituais.
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License.
 
 ---
 

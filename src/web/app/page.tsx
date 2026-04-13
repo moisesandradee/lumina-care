@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-white">
       {/* Navigation */}
-      <nav className="border-b border-slate-800 px-8 py-4 flex items-center justify-between">
+      <nav aria-label="Main navigation" className="border-b border-slate-800 px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center">
             <span className="text-white font-bold text-sm">L</span>
@@ -17,8 +17,8 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-6 text-sm text-slate-400">
           <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
-          <Link href="/triage" className="hover:text-white transition-colors">Triage</Link>
-          <Link href="/patients" className="hover:text-white transition-colors">Patients</Link>
+          <Link href="/dashboard" className="hover:text-white transition-colors">Triage</Link>
+          <Link href="/dashboard" className="hover:text-white transition-colors">Patients</Link>
           <Link
             href="/dashboard"
             className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg transition-colors"

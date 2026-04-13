@@ -10,12 +10,11 @@ Endpoints for patient data management and assessment submission.
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
-from fastapi import APIRouter, HTTPException
-from typing import Optional
+from fastapi import APIRouter
 
-from models.patient import Patient, PatientSummary, AssessmentRecord, CareStatus, CareIntensity
+from models.patient import PatientSummary, CareStatus, CareIntensity
 
 router = APIRouter()
 
@@ -62,7 +61,7 @@ async def submit_assessment(
         "assessment_id": assessment_id,
         "patient_id": patient_id,
         "instrument": instrument,
-        "received_at": datetime.utcnow().isoformat(),
+        "received_at": datetime.now(timezone.utc).isoformat(),
         "status": "processing",
         "message": "Assessment received. Risk profile will be updated within 60 seconds.",
     }
