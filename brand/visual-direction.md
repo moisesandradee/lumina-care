@@ -1,39 +1,45 @@
-# DIREÇÃO VISUAL LUMINA CARE
+# DIREÇÃO VISUAL LUMINA CARE: PRINCÍPIOS DE DESIGN CENTRADO NO HUMANO (HCI)
 
 ---
 
-## A ESTÉTICA DO CUIDADO
+## A ESTÉTICA DA COGNIÇÃO CLÍNICA
 
-Nossa direção visual é a tradução do nosso propósito em formas, cores e luz. Buscamos uma estética que comunique a seriedade e a inovação da saúde digital, mas que nunca perca a essência humana. É um **minimalismo premium com calor humano**, onde cada elemento visual é pensado para evocar confiança, serenidade e clareza.
-
----
-
-## PALETA DE CORES
-
-Nossa paleta é cuidadosamente selecionada para transmitir leveza e profissionalismo, com toques de calor e profundidade:
-
-| Cor      | Código Hexadecimal | Significado e Aplicação                                                                                             |
-| :------- | :----------------- | :-------------------------------------------------------------------------------------------------------------------- |
-| Branco   | `#F7FAFC`          | Base de clareza e pureza, fundamental para a sensação de espaço e limpeza.                                           |
-| Azul Claro | `#DCEEFF`          | Suavidade e tranquilidade, remetendo à serenidade e à tecnologia amigável.                                          |
-| Azul Médio | `#A9D4FF`          | Profundidade e confiança, um elo entre a leveza e a solidez da marca.                                                |
-| Azul Escuro | `#1F3C88`          | Autoridade e inteligência, utilizado para destaque e elementos que exigem maior impacto visual.                     |
-| Verde Claro | `#EAF4F2`          | Um toque de vitalidade e equilíbrio, sutilmente presente para evocar bem-estar e renovação.                          |
+A direção visual da **Lumina Care** não é meramente decorativa; é uma aplicação rigorosa dos princípios de Interação Humano-Computador (HCI) e ergonomia cognitiva. Nosso objetivo é reduzir a carga cognitiva dos profissionais de saúde, facilitando o processamento rápido e preciso de informações complexas. A estética resultante é um **minimalismo funcional**, onde cada elemento visual serve a um propósito específico de comunicação de dados ou facilitação de fluxo de trabalho, mantendo um ambiente digital que evoca serenidade e confiança.
 
 ---
 
-## ILUMINAÇÃO E ATMOSFERA
+## SISTEMA CROMÁTICO: SINALIZAÇÃO E HIERARQUIA
 
-A luz em nosso universo visual é sempre **difusa, com um glow suave e contraste controlado**. Evitamos sombras duras ou iluminação artificial excessiva. A atmosfera é de calma e inteligência, onde a tecnologia se integra de forma orgânica ao ambiente, sem ser intrusiva.
+Nossa paleta de cores é projetada como um sistema de sinalização semântica, otimizado para acessibilidade visual e contraste adequado em ambientes clínicos variados:
+
+| Cor Base | Código Hexadecimal | Função Semântica e Aplicação em Interface (UI) |
+| :--- | :--- | :--- |
+| **Branco Clínico** | `#F7FAFC` | Espaço negativo (white space) primário. Essencial para separação de componentes e redução de ruído visual. |
+| **Azul Cognitivo** | `#DCEEFF` | Fundos secundários e áreas de agrupamento de dados de baixo risco. Promove foco sem fadiga visual. |
+| **Azul Estrutural** | `#A9D4FF` | Elementos interativos primários e visualização de dados nominais. |
+| **Azul Autoridade** | `#1F3C88` | Tipografia primária, ícones de alta importância e sinalização de insights algorítmicos validados. |
+| **Verde Homeostase** | `#EAF4F2` | Indicadores de estabilidade, trajetórias positivas e confirmações de sistema. |
 
 ---
 
-## FOTOGRAFIA
+## ILUMINAÇÃO E RENDERIZAÇÃO DE INTERFACE
 
-Nossas imagens capturam **pessoas reais em close-ups delicados**, com foco na expressão e na conexão humana. A tecnologia é retratada de forma sutil, quase invisível, servindo como pano de fundo para as interações. Buscamos a autenticidade e a emoção genuína, com uma estética que remete a um cuidado atencioso e personalizado.
+A iluminação em nossas representações visuais e a renderização de componentes de UI seguem o princípio de **"Flat Design com Profundidade Semântica"**. Utilizamos sombras sutis (soft drop shadows) exclusivamente para indicar interatividade (affordance) ou elevação no eixo Z (z-index) para modais críticos. A iluminação geral é difusa, evitando gradientes agressivos que possam distorcer a percepção de dados ou causar distração.
 
 ---
 
-## O QUE NÃO SOMOS
+## DIRETRIZES DE FOTOGRAFIA E REPRESENTAÇÃO HUMANA
 
-Distanciamo-nos de estéticas que remetem a um **"cara de hospital"** frio e impessoal, ou a um **"SaaS genérico"** sem alma. Nosso azul corporativo tem conceito, não é apenas uma escolha padrão. Evitamos o **"excesso de futurismo"** que pode alienar, preferindo uma abordagem atemporal e humanizada.
+A representação visual de pacientes e profissionais deve aderir a um padrão de **realismo documental empático**. 
+- **Foco:** Expressões faciais autênticas e interações genuínas.
+- **Composição:** Uso de profundidade de campo rasa (shallow depth of field) para isolar o sujeito humano, desfocando o ambiente tecnológico para o segundo plano.
+- **Mensagem:** A tecnologia deve ser retratada como uma infraestrutura invisível que suporta o cuidado, nunca como o protagonista da cena.
+
+---
+
+## ANTIPADRÕES VISUAIS (O QUE EVITAMOS)
+
+Para manter a integridade do nosso sistema de design, proibimos estritamente:
+- **Skeuomorfismo Clínico:** Representações literais de objetos físicos (ex: pranchetas de papel digitalizadas) que não agregam valor funcional.
+- **Cores de Alerta Não Calibradas:** O uso de vermelhos ou laranjas saturados fora de contextos de risco agudo, para prevenir a "fadiga de alarme" (alert fatigue).
+- **Estética "Sci-Fi" Genérica:** Elementos visuais hiper-futuristas (ex: neon excessivo, interfaces holográficas) que minam a credibilidade científica e a aplicabilidade clínica no presente.

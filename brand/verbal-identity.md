@@ -1,19 +1,19 @@
-# IDENTIDADE VERBAL LUMINA CARE
+# IDENTIDADE VERBAL LUMINA CARE: LINGUAGEM DE PRECISÃO E EMPATIA
 
 ---
 
-## A VOZ DO CUIDADO
+## A SINTAXE DO CUIDADO AUMENTADO
 
-Nossa identidade verbal é a expressão da nossa essência: **clara, humana, elegante e precisa**. Cada palavra é escolhida para refletir a delicadeza e a profundidade do cuidado, sem perder a objetividade que a tecnologia exige.
-
----
-
-## VOCABULÁRIO ESSENCIAL
-
-Na Lumina Care, valorizamos termos que ressoam com nosso propósito. Priorizamos a **clareza**, a **presença** e o **cuidado** em todas as comunicações. A **inteligência** que oferecemos é sempre acompanhada de **proximidade**, criando uma linguagem que acolhe e informa.
+A identidade verbal da **Lumina Care** é estruturada sobre os pilares da **precisão científica, clareza algorítmica e empatia humana**. Nossa comunicação transcende o jargão corporativo, adotando uma postura de liderança de pensamento (thought leadership) que reflete o rigor de instituições de pesquisa de ponta. Cada interação textual é projetada para ser inequívoca, fundamentada em evidências e profundamente respeitosa com a complexidade da experiência humana na saúde.
 
 ---
 
-## O QUE EVITAMOS
+## LÉXICO FUNDAMENTAL: O VOCABULÁRIO DA INOVAÇÃO ÉTICA
 
-Distanciamo-nos de clichês e jargões vazios. Não buscamos a **disrupção** pela disrupção, nem nos consideramos **revolucionários** sem substância. Evitamos a **sinergia** corporativa e o **startupês** que obscurecem a mensagem. Nossa comunicação é direta, honesta e livre de termos que não agregam valor real ao diálogo sobre saúde e bem-estar.
+Na Lumina Care, empregamos um vocabulário que ressoa com nosso compromisso com a excelência técnica e a responsabilidade clínica. Priorizamos termos que denotam **clareza informacional**, **presença empática** e **cuidado centrado no paciente**. A **inteligência aumentada** que desenvolvemos é sempre descrita em conjunto com a **proximidade humana**, estabelecendo uma linguagem que não apenas informa, mas também acolhe e empodera os profissionais de saúde e os pacientes.
+
+---
+
+## TAXONOMIA DA EXCLUSÃO: O QUE REJEITAMOS
+
+Rejeitamos categoricamente o uso de terminologias que obscurecem a realidade clínica ou que prometem soluções mágicas sem base empírica. Distanciamo-nos de chavões como **"disrupção"** descontextualizada ou inovações **"revolucionárias"** que carecem de validação científica rigorosa. Evitamos o jargão de **"startupês"** e a retórica de **"sinergia"** corporativa que diluem a gravidade e a importância do nosso trabalho. Nossa comunicação é pautada pela honestidade intelectual, transparência metodológica e um compromisso inabalável com a verdade científica no diálogo sobre saúde digital e bem-estar.
