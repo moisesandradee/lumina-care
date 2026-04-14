@@ -1,39 +1,67 @@
-# Lumina Care
+<div align="center">
 
-## Quando o cuidado aparece, tudo muda.
+# LUMINA CARE
 
-### O Problema
+### *Quando o cuidado aparece, tudo muda.*
 
-No cenário atual da saúde, a tecnologia muitas vezes cria barreiras em vez de pontes, obscurecendo o cuidado humano essencial. A complexidade dos sistemas e a falta de clareza nos dados dificultam a percepção e a entrega de um cuidado verdadeiramente centrado no paciente.
+</div>
 
-### A Solução
+---
 
-Lumina Care é uma healthtech que torna o cuidado visível com clareza, presença e inteligência humana. Nossa plataforma transforma dados de saúde em experiências de cuidado digital centradas no ser humano, oferecendo uma camada mais clara e humana para a saúde digital. Construída para trazer clareza, presença e cuidado, a Lumina Care ilumina o que realmente importa.
+## A CLAREZA QUE TRANSFORMA
 
-### Diferenciais
+No labirinto da saúde digital, a tecnologia, por vezes, obscurece o que deveria iluminar: o cuidado humano. Sistemas complexos e dados fragmentados criam uma névoa, distanciando pacientes e cuidadores. A **Lumina Care** surge para dissipar essa névoa.
 
-*   **Clareza:** Simplificamos informações complexas para que o cuidado seja facilmente compreendido.
-*   **Presença:** Facilitamos a conexão humana, garantindo que a tecnologia sirva como um suporte, não um substituto.
-*   **Inteligência Humana:** Combinamos o melhor da tecnologia com a sensibilidade e a expertise dos profissionais de saúde.
+---
 
-### Funcionalidades (Visão Geral)
+## NOSSA ESSÊNCIA
 
-*   **Visualização Intuitiva de Dados:** Dashboards e relatórios que destacam informações cruciais de forma acessível.
-*   **Comunicação Otimizada:** Ferramentas que promovem a interação eficaz entre pacientes, cuidadores e equipes médicas.
-*   **Suporte à Decisão:** Insights baseados em dados para um planejamento de cuidado mais preciso e personalizado.
+Somos uma healthtech que redefine a visibilidade do cuidado. Com **clareza**, **presença** e **inteligência humana**, transformamos dados em uma experiência de cuidado digital que é, acima de tudo, humana. Uma camada mais nítida, mais próxima, onde a tecnologia serve ao propósito maior: **iluminar o que realmente importa**.
 
-### Visão
+---
 
-Lumina Care nasce da ideia de que tecnologia não deve ocupar o centro. Deve abrir espaço para o que importa: mais clareza, menos ruído, mais presença, mais cuidado visível.
+## PILARES DO CUIDADO VISÍVEL
 
-### Roadmap
+| Pilar             | O que significa para Lumina Care                                                                                             |
+| :---------------- | :-------------------------------------------------------------------------------------------------------------------------- |
+| **Clareza**       | Descomplicamos informações complexas, tornando o caminho do cuidado intuitivo e compreensível.                               |
+| **Presença**      | Fortalecemos a conexão humana, garantindo que a tecnologia seja um elo, não uma barreira.                                   |
+| **Inteligência**  | Unimos o poder da tecnologia à sensibilidade e expertise dos profissionais, para decisões mais assertivas e personalizadas. |
 
-Nosso roadmap foca na evolução contínua da plataforma, incorporando feedback de usuários e as mais recentes inovações em saúde digital para expandir funcionalidades e aprimorar a experiência de cuidado.
+---
 
-### Contribuição
+## FUNCIONALIDADES EM FOCO
 
-Aceitamos contribuições da comunidade. Por favor, consulte as diretrizes de contribuição para mais detalhes.
+-   **Visualização Intuitiva:** Dashboards que revelam insights cruciais, de forma acessível e imediata.
+-   **Comunicação Otimizada:** Ferramentas que aproximam pacientes, cuidadores e equipes, eliminando ruídos.
+-   **Suporte à Decisão:** Inteligência que guia o planejamento do cuidado, tornando-o mais preciso e humano.
 
-### Licença
+---
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+## VISÃO
+
+Acreditamos que a tecnologia não deve ser o centro, mas o catalisador. Ela deve abrir espaço para o essencial: **mais clareza, menos ruído, mais presença, mais cuidado visível.**
+
+---
+
+## JORNADA E EVOLUÇÃO
+
+Nosso roadmap é um compromisso com a inovação contínua. Cada passo é guiado pelo feedback dos usuários e pelas mais recentes descobertas em saúde digital, expandindo funcionalidades e aprimorando a experiência de cuidado.
+
+---
+
+## COLABORE
+
+Convidamos a comunidade a construir conosco. Suas contribuições são valiosas para moldar o futuro do cuidado visível. Consulte nossas diretrizes para mais detalhes.
+
+---
+
+## LICENÇA
+
+Este projeto é regido pela Licença MIT. Detalhes completos no arquivo `LICENSE`.
+
+<div align="center">
+
+*Lumina Care. Cuidar é iluminar.*
+
+</div>
