@@ -1,0 +1,124 @@
+name: PhantomSeal CI
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "phantom-seal/**"
+      - ".github/workflows/python-app.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "phantom-seal/**"
+      - ".github/workflows/python-app.yml"
+
+concurrency:
+  group: phantomseal-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      DRY_RUN: "true"
+      CHAIN_ID: "11155111"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Step 1/6 - Install dependencies
+        working-directory: phantom-seal
+        run: |
+          set -e
+          echo "Installing: web3, eth-account, python-dotenv, dilithium-py, pytest"
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir -q \
+            "web3==6.15.1" \
+            "eth-account==0.11.3" \
+            "python-dotenv==1.0.1" \
+            "dilithium-py>=0.0.5" \
+            "pytest>=7"
+          echo "✓ Dependencies installed"
+
+      - name: Step 2/6 - Unit tests (tamper detection)
+        working-directory: phantom-seal
+        run: |
+          set -e
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Running tamper-detection test suite…"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python -m pytest tests/test_tamper_detection.py -v
+          echo "✓ All unit tests passed"
+
+      - name: Step 3/6 - Create test document
+        working-directory: phantom-seal
+        run: |
+          set -e
+          echo "test document content for phantom-seal validation" > test.txt
+          echo "✓ Test document created: test.txt"
+
+      - name: Step 4/6 - Seal test document (dry-run)
+        working-directory: phantom-seal
+        run: |
+          set -e
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Generating seal…"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python -m phantom_seal.cli.seal test.txt --dry-run
+          echo "✓ Sealing complete"
+
+      - name: Step 5/6 - Verify evidence file exists
+        working-directory: phantom-seal
+        run: |
+          set -e
+          echo "Checking for generated evidence…"
+          if [ ! -d "evidence" ]; then
+            echo "ERROR: evidence/ directory does not exist"
+            exit 1
+          fi
+          ls -lh evidence/
+          BUNDLE=$(ls -t evidence/bundle_*.json 2>/dev/null | head -n 1)
+          if [ -z "$BUNDLE" ]; then
+            echo "ERROR: No bundle found (expected: evidence/bundle_*.json)"
+            exit 1
+          fi
+          echo "Bundle found: $BUNDLE"
+          echo "BUNDLE=$BUNDLE" >> "$GITHUB_ENV"
+
+      - name: Step 6/6 - Verify sealed document
+        working-directory: phantom-seal
+        run: |
+          set -e
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Validating seal…"
+          echo "Document: test.txt"
+          echo "Evidence: $BUNDLE"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python -m phantom_seal.cli.verify test.txt "$BUNDLE"
+          echo "✓ Verification passed"
+
+      - name: Report - PhantomSeal validation complete
+        if: success()
+        working-directory: phantom-seal
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "PhantomSeal Validation Complete"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "Bundle contents:"
+          cat "$BUNDLE"
+
+      - name: Cleanup
+        if: always()
+        working-directory: phantom-seal
+        run: |
+          rm -f test.txt
+          echo "Cleanup complete (evidence retained for audit)"
